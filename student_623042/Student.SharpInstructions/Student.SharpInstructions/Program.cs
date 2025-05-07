@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 
 class Program
 {
@@ -50,7 +51,17 @@ class Program
 
     static int GetMenuChoice()
     {
-        return Convert.ToInt32(Console.ReadLine());
+        while (true)
+        {
+            try
+            {
+                return Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                Console.WriteLine("ошибка");
+            }
+        }
     }
     // if else работает
     static void ExecuteIfElse()
@@ -149,7 +160,7 @@ class Program
         int repetitions = 0;
         while (true)
         {
-            Console.WriteLine("вы выбрали инструкцию While");
+            Console.WriteLine("вы выбрали инструкцию  Do While");
             Console.WriteLine("нажмите Enter для запуска инструкции, для возврата к списку подпрограмм нажмите Esc");
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             if (keyInfo.Key == ConsoleKey.Enter)
