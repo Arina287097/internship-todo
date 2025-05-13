@@ -1,18 +1,27 @@
 ﻿namespace Student.ConsoleTodo
 {
+    /// <summary>
+    /// 
+    /// </summary> 
     class Program
     {
-        //список задач
+        /// <summary>
+        /// список задач
+        /// </summary>
         static List<Task> tasks = new List<Task>();
 
         static void Main(string[] args)
         {
-            //основоной цикл программы
+            /// <summary>
+            /// основоной цикл программы
+            /// </summary>
             while (true)
             {
                 ShowMenu();
                 int choice = GetMenuChoice();
-                //выбор пользователя
+                /// <summary>
+                /// выбор пользователя
+                /// </summary>
                 switch (choice)
                 {
                     case 1:
@@ -24,7 +33,9 @@
                 }
             }
         }
-        //метод отображения меню
+        /// <summary>
+        /// метод отображения меню
+        /// </summary>
         static void ShowMenu()
         {
             Console.Clear();
@@ -32,7 +43,10 @@
             Console.WriteLine("1 - Посмотреть список задач");
             Console.WriteLine("2 - Добавить задачу");
         }
-        //метод для получения выбора пользователя
+        /// <summary>
+        /// метод для получения выбора пользователя
+        /// </summary>
+        /// <returns>целое число-выбранный пункт меню</returns>
         static int GetMenuChoice()
         {
             while (true)
@@ -47,7 +61,9 @@
                 }
             }
         }
-        //метод для добавления задач
+        /// <summary>
+        /// метод для добавления задач
+        /// </summary>
         static void AddTask()
         {
             Console.WriteLine("Введите заголовок задачи. По завершению ввода нажмите Enter:");
@@ -60,37 +76,41 @@
             Console.WriteLine("Задача добавлена! Нажмите Enter для продолжения.");
             Console.ReadLine();
         }
-        //метод для просмотра задач
+        /// <summary>
+        /// метод для просмотра задач
+        /// </summary>
         static void ShowTasks()
         {
+            
+            Console.WriteLine("Список задач:");
+
+            if (tasks.Count == 0)
+            {
+                Console.WriteLine("Задач нет.");
+            }
+            else
+            {
+                for (int i = 0; i < tasks.Count; i++)
+                {
+                    Console.WriteLine($"Задача {i + 1}:");
+                    Console.WriteLine($"Заголовок: {tasks[i].Title}");
+                    Console.WriteLine($"Описание: {tasks[i].Description}");
+                }
+            }
             while (true)
             {
-                Console.WriteLine("Список задач:");
+                Console.WriteLine("Для выхода в главное меню нажмите Esc");
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
-
-                if (tasks.Count == 0)
-                {
-                    Console.WriteLine("Задач нет.");
-                }
-                else
-                {
-                    for (int i = 0; i < tasks.Count; i++)
-                    {
-                        Console.WriteLine($"Задача {i + 1}:");
-                        Console.WriteLine($"Заголовок: {tasks[i].Title}");
-                        Console.WriteLine($"Описание: {tasks[i].Description}");
-                    }
-                }
-
                 if (keyInfo.Key == ConsoleKey.Escape)
                 {
-                    Console.WriteLine("Вы в меню");
-                    break;
+                    return;
                 }
             }
         }
     }
-    //класс для представления задач
+    /// </summary>
+    /// Класс для представления задач
+    /// </summary>
     class Task
     {
         public string Title { get; set; }
