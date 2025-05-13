@@ -1,0 +1,32 @@
+# Игнорирование файлов и папок, генерируемых Visual Studio
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+
+# Игнорирование файлов настроек среды
+*.vs/
+.vscode/
+
+# Игнорирование файлов сборки
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.appx
+*.appxbundle
+
+# Игнорирование файлов пользовательских настроек
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.jfm.cache
+
+# Игнорирование временных файлов
+*.tmp
+*.log
+
+# Игнорирование кэша NuGet
+packages/
+
