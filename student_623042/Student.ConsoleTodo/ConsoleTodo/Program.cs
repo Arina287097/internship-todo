@@ -1,19 +1,13 @@
-﻿namespace Student.ConsoleTodo
+﻿
+namespace ConsoleTodo
 {
-    /// <summary>
-    /// Основоной класс приложения, роеднозначенный для управления задачами
-    /// </summary>
-    /// <remarks>
-    /// Этот класс содержит основной цикл программы.
-    /// Он позволяет добавлять задач и просматривать их.
-    /// </remarks>
     class Program
     {
-        /// Список задач, хранящий все добавленные задачи
-        static List<Task> tasks = new List<Task>();
         /// <summary>
-        /// Основоной цикл программы, который запускает меню и обрабатывает выбор пользователя
+        /// Список задач, хранящий все добавленные задачи
         /// </summary>
+        static List<Task> tasks = new List<Task>();
+
         static void Main(string[] args)
         {
             while (true)
@@ -29,9 +23,13 @@
                     case 2:
                         AddTask();
                         break;
+                    default:
+                        Console.WriteLine("Неверный выбор. Пожалуйста, попробуйте снова.");
+                        break;
                 }
             }
         }
+
         /// <summary>
         /// Метод отображения меню, с доступными опциями
         /// </summary>
@@ -42,10 +40,11 @@
             Console.WriteLine("1 - Посмотреть список задач");
             Console.WriteLine("2 - Добавить задачу");
         }
+
         /// <summary>
         /// Метод для получения выбора пользователя
         /// </summary>
-        /// <returns>Целое число-выбранный пункт меню</returns>
+        /// <returns>Целое число - выбранный пункт меню</returns>
         static int GetMenuChoice()
         {
             while (true)
@@ -56,10 +55,11 @@
                 }
                 catch
                 {
-                    Console.WriteLine("Ошибка");
+                    Console.WriteLine("Ошибка. Пожалуйста, введите число.");
                 }
             }
         }
+
         /// <summary>
         /// Метод для добавления новых задач в список задач
         /// </summary>
@@ -75,14 +75,13 @@
             Console.WriteLine("Задача добавлена! Нажмите Enter для продолжения.");
             Console.ReadLine();
         }
+
         /// <summary>
         /// Метод для отображения задач в списке
         /// </summary>
         static void ShowTasks()
         {
-
             Console.WriteLine("Список задач:");
-
             if (tasks.Count == 0)
             {
                 Console.WriteLine("Задач нет.");
@@ -107,18 +106,5 @@
             }
         }
     }
-    /// </summary>
-    /// Класс для представления задач с заголовком и описанием 
-    /// </summary>
-    class Task
-    {
-        /// </summary>
-        /// Заголовок задачи
-        /// </summary>
-        public string Title { get; set; }
-        /// </summary>
-        /// Описание задачи
-        /// </summary>
-        public string Description { get; set; }
-    }
+
 }
