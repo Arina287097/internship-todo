@@ -1,4 +1,4 @@
-﻿namespace ConsoleT
+﻿namespace ConsoleTodo
 {
     /// <summary>
     /// Класс для представления задач с заголовком и описанием 
