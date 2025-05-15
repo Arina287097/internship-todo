@@ -1,17 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Менеджер задач для управления списком задач
+        /// </summary>
         private TaskManager taskManager = new TaskManager();
+
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Метод для работы кнопки "добавить задачу"
+        /// </summary>
         private void ButtonAddName_Click(object sender, RoutedEventArgs e)
         {
             var name = txtTaskName.Text.Trim();
@@ -23,7 +31,7 @@ namespace WpfApp1
                 return;
             }
 
-            // Создаем задачу с использованием свойства Title
+            // Создание задачи с использованием свойства Title
             var task = new Task { Title = name, Description = description };
             taskManager.AddTask(task);
             UpdateTaskList();
@@ -32,6 +40,9 @@ namespace WpfApp1
             txtDescription.Clear();
         }
 
+        /// <summary>
+        /// Метод для работы кнопки "удалить задачу"
+        /// </summary>
         private void btnRemoveTask_Click(object sender, RoutedEventArgs e)
         {
             if (lstNames.SelectedItem is Task selectedTask)
@@ -45,6 +56,9 @@ namespace WpfApp1
             }
         }
 
+        /// <summary>
+        /// Метод для обновления интерфейса задач
+        /// </summary>
         private void UpdateTaskList()
         {
             lstNames.Items.Clear();
@@ -55,34 +69,7 @@ namespace WpfApp1
         }
     }
 
-    public class Task
-    {
-        public string Title { get; set; } 
-        public string Description { get; set; } 
 
-        public override string ToString()
-        {
-            return $"{Title}-{Description}"; 
-        }
-    }
 
-    public class TaskManager
-    {
-        private List<Task> tasks = new List<Task>();
 
-        public void AddTask(Task task)
-        {
-            tasks.Add(task);
-        }
-
-        public void RemoveTask(Task task)
-        {
-            tasks.Remove(task);
-        }
-
-        public List<Task> GetTasks()
-        {
-            return tasks;
-        }
-    }
 }

@@ -16,7 +16,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
         <Label Grid.Column="0">Список задач</Label>
         <ListBox Grid.Row="1" x:Name="lstNames">
             <ListBox.ItemTemplate>
