@@ -1,5 +1,4 @@
-﻿
-namespace ConsoleTodo
+﻿namespace ConsoleT
 {
     class Program
     {
@@ -108,3 +107,4 @@ namespace ConsoleTodo
     }
 
 }
+
