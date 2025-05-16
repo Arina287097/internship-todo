@@ -1,0 +1,71 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{4C60BAD1-E88B-1C7E-FB37-2F0A94539DE3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Student.ConsolInstrucshion</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".vs\ProjectEvaluation\student.sharpinstructions.metadata.v9.bin" />
+    <None Include=".vs\ProjectEvaluation\student.sharpinstructions.projects.v9.bin" />
+    <None Include=".vs\ProjectEvaluation\student.sharpinstructions.strings.v9.bin" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\Student.SharpInstructions\DesignTimeBuild\.dtbcache.v2" />
+    <None Include=".vs\Student.SharpInstructions\FileContentIndex\01243844-6861-463a-b47a-cd33278d6639.vsidx" />
+    <None Include=".vs\Student.SharpInstructions\FileContentIndex\42e210ef-22ed-4b11-ac5d-eeabcbb82443.vsidx" />
+    <None Include=".vs\Student.SharpInstructions\FileContentIndex\7aea3e09-c7bb-46de-8ff6-927b7e95c5c1.vsidx" />
+    <None Include=".vs\Student.SharpInstructions\FileContentIndex\ed011c0a-5f23-4198-93e5-fd8de0c8c06c.vsidx" />
+    <None Include=".vs\Student.SharpInstructions\v17\.futdcache.v2" />
+    <None Include=".vs\Student.SharpInstructions\v17\.suo" />
+    <None Include=".vs\Student.SharpInstructions\v17\.wsuo" />
+    <None Include=".vs\Student.SharpInstructions\v17\DocumentLayout.backup.json" />
+    <None Include=".vs\Student.SharpInstructions\v17\DocumentLayout.json" />
+    <None Include=".vs\VSWorkspaceState.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\Student.ConsolInstrucshion\v17\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
