@@ -31,7 +31,6 @@ namespace WpfApp1
                 return;
             }
 
-            // Создание задачи с использованием свойства Title
             var task = new Task { Title = name, Description = description };
             taskManager.AddTask(task);
             UpdateTaskList();
