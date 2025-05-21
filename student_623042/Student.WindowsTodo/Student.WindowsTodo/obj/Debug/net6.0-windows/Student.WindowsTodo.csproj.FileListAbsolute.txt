@@ -1,4 +1,0 @@
-C:\repo\internship-todo\student_623042\Student.WindowsTodo\Student.WindowsTodo\obj\Debug\net6.0-windows\MainWindow.g.cs
-C:\repo\internship-todo\student_623042\Student.WindowsTodo\Student.WindowsTodo\obj\Debug\net6.0-windows\App.g.cs
-C:\repo\internship-todo\student_623042\Student.WindowsTodo\Student.WindowsTodo\obj\Debug\net6.0-windows\Student.WindowsTodo_MarkupCompile.cache
-C:\repo\internship-todo\student_623042\Student.WindowsTodo\Student.WindowsTodo\obj\Debug\net6.0-windows\Student.WindowsTodo_MarkupCompile.lref
