@@ -30,7 +30,7 @@ using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
-using Student.WindowsTodo;
+using WpfApp1;
 
 
 namespace Student.WindowsTodo {
