@@ -7,7 +7,7 @@ namespace Student.WindowsTodo
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// Менеджер задач для управления задачами
+        /// Менеджер задач для управления списком задач
         /// </summary>
         private TaskManager taskManager = new TaskManager();
 
@@ -31,7 +31,7 @@ namespace Student.WindowsTodo
                 return;
             }
 
-            var task = new Task( name, description );
+            var task = new Task(name, description);
             taskManager.AddTask(task);
             UpdateTaskList();
 
@@ -56,7 +56,7 @@ namespace Student.WindowsTodo
         }
 
         /// <summary>
-        /// Обновление интерфейса задач
+        /// Метод для обновления интерфейса задач
         /// </summary>
         private void UpdateTaskList()
         {
