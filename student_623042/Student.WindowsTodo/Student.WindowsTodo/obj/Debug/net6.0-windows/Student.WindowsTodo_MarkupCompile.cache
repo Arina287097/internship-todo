@@ -8,13 +8,13 @@ C:\repo\internship-todo\student_623042\Student.WindowsTodo\Student.WindowsTodo\o
 Student.WindowsTodo
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\repo\internship-todo\student_623042\Student.WindowsTodo\Student.WindowsTodo\App.xaml
 11407045341
 
-6-1103428897
-194178300874
+8-1063792420
+388356601748
 MainWindow.xaml;
 
-False
+True
 

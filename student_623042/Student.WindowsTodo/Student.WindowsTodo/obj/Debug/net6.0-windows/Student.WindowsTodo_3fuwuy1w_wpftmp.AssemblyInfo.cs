@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Student.WindowsTodo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e0b8defc2e7eb5076171727bc900e14e48f6ca8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e11eff3d05a5b824c6b03eb65f6dc53045a46ba")]
 [assembly: System.Reflection.AssemblyProductAttribute("Student.WindowsTodo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Student.WindowsTodo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
