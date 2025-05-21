@@ -1,0 +1,40 @@
+﻿<Window x:Class="Student.WindowsTodo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Student.WindowsTodo"
+        mc:Ignorable="d"
+        Title="Task Manager" Height="400" Width="560">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0">Список задач</Label>
+        <ListBox Grid.Row="1" x:Name="lstNames">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">
+            <Label Grid.Row="0">Введите название задачи</Label>
+            <TextBox x:Name="txtTaskName"/>
+            <Label Grid.Column="0">Введите описание задачи</Label>
+            <TextBox x:Name="txtDescription"/>
+            <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddName_Click">Добавить задачу</Button>
+            <Button x:Name="btnRemove" Margin="0,5,0,0" Click="btnRemoveTask_Click">Удалить задачу</Button>
+        </StackPanel>
+    </Grid>
+</Window>
+
