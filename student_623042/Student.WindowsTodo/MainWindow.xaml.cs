@@ -36,7 +36,7 @@ namespace Student.WindowsTodo
             txtDescription.Clear();
         }
 
-        /// Кнопка удаления задачи
+        // Кнопка удаления задачи
         private void btnRemoveTask_Click(object sender, RoutedEventArgs e)
         {
             if (lstNames.SelectedItem is Task selectedTask)
