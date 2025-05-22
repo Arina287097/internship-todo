@@ -28,6 +28,7 @@ namespace Student.WindowsTodo
             Title = name;
             Description = description;
         }
+
         /// <summary>
         /// Получить список задач
         /// </summary>

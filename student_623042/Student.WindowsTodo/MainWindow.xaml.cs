@@ -11,16 +11,13 @@ namespace Student.WindowsTodo
         /// </summary>
         private TaskManager taskManager = new TaskManager();
 
-
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Метод для работы кнопки "добавить задачу"
-        /// </summary>
-        private void ButtonAddName_Click(object sender, RoutedEventArgs e)
+        // Кнопка для добавления задачи
+        private void btnAddName_Click(object sender, RoutedEventArgs e)
         {
             var name = txtTaskName.Text.Trim();
             var description = txtDescription.Text.Trim();
@@ -33,21 +30,19 @@ namespace Student.WindowsTodo
 
             var task = new Task(name, description);
             taskManager.AddTask(task);
-            UpdateTaskList();
+            UpdateInterfaceTaskList();
 
             txtTaskName.Clear();
             txtDescription.Clear();
         }
 
-        /// <summary>
-        /// Метод для работы кнопки "удалить задачу"
-        /// </summary>
+        /// Кнопка удаления задачи
         private void btnRemoveTask_Click(object sender, RoutedEventArgs e)
         {
             if (lstNames.SelectedItem is Task selectedTask)
             {
                 taskManager.RemoveTask(selectedTask);
-                UpdateTaskList();
+                UpdateInterfaceTaskList();
             }
             else
             {
@@ -56,9 +51,9 @@ namespace Student.WindowsTodo
         }
 
         /// <summary>
-        /// Метод для обновления интерфейса задач
+        /// Обновление списка задач
         /// </summary>
-        private void UpdateTaskList()
+        private void UpdateInterfaceTaskList()
         {
             lstNames.Items.Clear();
             foreach (var task in taskManager.GetTasks())
@@ -67,8 +62,4 @@ namespace Student.WindowsTodo
             }
         }
     }
-
-
-
-
 }

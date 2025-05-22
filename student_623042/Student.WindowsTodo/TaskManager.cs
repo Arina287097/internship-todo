@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Student.WindowsTodo
 {
     /// <summary>
-    /// Управлять Списком задач
+    /// Управлять Задачами
     /// </summary>
     public class TaskManager
     {
@@ -29,7 +29,7 @@ namespace Student.WindowsTodo
         }
 
         /// <summary>
-        /// Полцчить список задач
+        /// Получить список задач
         /// </summary>
         /// <returns>Список задач</returns>
         public List<Task> GetTasks()
