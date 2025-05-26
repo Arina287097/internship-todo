@@ -8,8 +8,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <ProjectReference Include="..\..\Student\Student.Todo\Student.Todo.csproj" />
   </ItemGroup>
 
+=======
+>>>>>>> main
 </Project>
