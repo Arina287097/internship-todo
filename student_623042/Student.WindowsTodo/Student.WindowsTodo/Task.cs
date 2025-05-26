@@ -18,14 +18,11 @@ namespace Student.WindowsTodo
         /// </summary>
         public string Description { get; set; }
 
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Конструктор с параметрами name и description
         /// </summary>
         /// <param name="name">Название задачи</param>
         /// <param name="description">Описание задачи</param>
->>>>>>> main
         // для инциализации объекта 
         public Task () { }
 
