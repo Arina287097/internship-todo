@@ -1,7 +1,7 @@
 ﻿namespace ConsoleTodo
 {
     /// <summary>
-    /// Класс для представления задач с заголовком и описанием 
+    /// Задача
     /// </summary>
     public class Task
     {

@@ -2,7 +2,7 @@
 namespace ConsoleTodo.Services;
 
 /// <summary>
-/// Класс для бизнес-логики работы с задачами
+/// Бизнес логика работы с задачами
 /// </summary>
 public class TaskService
 {

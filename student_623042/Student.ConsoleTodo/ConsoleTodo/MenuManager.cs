@@ -3,7 +3,7 @@
 namespace ConsoleTodo.Managers;
 
 /// <summary>
-/// Класс лоя управления пользовательским интерфейсом
+/// Управление пользовательским интерфейсом 
 /// </summary>
 public class MenuManager
 {
@@ -15,7 +15,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для отображения меню в консоли
+    /// Отображение меню
     /// </summary>
     public void ShowMainMenu()
     {
@@ -26,7 +26,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для обработки выбора пользователя
+    /// Обработка выбора пользователя
     /// </summary>
     /// <param name="choice"></param>
     public void ProcessInput(int choice)
@@ -46,7 +46,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для отображения задач в списке задач
+    /// Отображение задач в списке задач
     /// </summary>
     private void ShowTasks()
     {
@@ -72,7 +72,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для добавления задач
+    /// Добавить задачу
     /// </summary>
     private void AddTask()
     {
@@ -88,7 +88,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для упрощения повторяещегося кода
+    /// Упрощение повторяещегося кода
     /// </summary>
     /// <param name="prompt"></param>
     /// <returns>чтение строки</returns>
@@ -99,7 +99,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для выхода в меню приложения (для 1 выбора)
+    /// Выход в меню (для 1 выбора)
     /// </summary>
     private void WaitForEscape()
     {
@@ -108,7 +108,7 @@ public class MenuManager
     }
 
     /// <summary>
-    /// Метод для выхода в меню приложнения (для 2 выбора)
+    /// Выход в меню (для 2 выбора)
     /// </summary>
     private void WaitForContinue()
     {
