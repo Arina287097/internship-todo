@@ -27,6 +27,11 @@ namespace Student.WindowsTodo
             Title = name;
             Description = description;
         }
+
+        /// <summary>
+        /// Получить список задач
+        /// </summary>
+        /// <returns>Строковое значение задачи</returns>
         public override string ToString()
         {
             return $"{Title} - {Description}";
