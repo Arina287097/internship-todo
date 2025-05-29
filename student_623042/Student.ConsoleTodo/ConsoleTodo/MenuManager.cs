@@ -1,4 +1,5 @@
-﻿using ConsoleTodo.Services;
+﻿using Student.Todo.Models;
+using Student.Todo.Services;
 
 namespace ConsoleTodo.Managers;
 
@@ -7,11 +8,11 @@ namespace ConsoleTodo.Managers;
 /// </summary>
 public class MenuManager
 {
-    private readonly TaskService _taskService;
+    private readonly TaskManager _taskManager;
 
-    public MenuManager(TaskService taskService)
+    public MenuManager(TaskManager taskManager)
     {
-        _taskService = taskService;
+        _taskManager = taskManager;
     }
 
     /// <summary>
@@ -23,6 +24,7 @@ public class MenuManager
         Console.WriteLine("Выберите действие:");
         Console.WriteLine("1 - Посмотреть список задач");
         Console.WriteLine("2 - Добавить задачу");
+        Console.WriteLine("3 - Удалить задачу");
     }
 
     /// <summary>
@@ -39,6 +41,9 @@ public class MenuManager
             case 2:
                 AddTask();
                 break;
+            case 3:
+                RemoveTask();
+                break;
             default:
                 Console.WriteLine("Неверный выбор");
                 break;
@@ -51,7 +56,7 @@ public class MenuManager
     private void ShowTasks()
     {
         Console.WriteLine("Список задач:");
-        var tasks = _taskService.GetAllTasks();
+        var tasks = _taskManager.GetTasks();
 
         if (tasks.Count == 0)
         {
@@ -76,14 +81,42 @@ public class MenuManager
     /// </summary>
     private void AddTask()
     {
-        var task = new Task
+        var task = new TodoItem
         {
             Title = GetInput("Введите заголовок задачи:"),
             Description = GetInput("Введите описание задачи:")
         };
 
-        _taskService.AddTask(task);
+        _taskManager.AddTask(task);
         Console.WriteLine("Задача добавлена!");
+        WaitForContinue();
+    }
+
+    /// <summary>
+    /// Удалиить задачу
+    /// </summary>
+    private void RemoveTask()
+    {
+        var tasks = _taskManager.GetTasks();
+
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("Задач для удаления нет.");
+            WaitForContinue();
+            return;
+        }
+
+        Console.Write("Введите номмер задачи для удаления:");
+        if (int.TryParse(Console.ReadLine(), out int taskNumber) &&
+            taskNumber > 0 && taskNumber <= tasks.Count)
+        {
+            _taskManager.RemoveTask(tasks[taskNumber - 1]);
+            Console.WriteLine("Задача удалена");
+        }
+        else
+        {
+            Console.WriteLine("Неверный номер задачи");
+        }
         WaitForContinue();
     }
 

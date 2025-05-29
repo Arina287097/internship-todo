@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Student.Todo.Services;
+using Student.Todo.Models;
 
 namespace Student.WindowsTodo
 {
