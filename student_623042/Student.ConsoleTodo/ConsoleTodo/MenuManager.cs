@@ -1,152 +1,118 @@
-﻿using Student.Todo.Models;
-using Student.Todo.Services;
-using System.Threading.Tasks;
+﻿using ConsoleTodo.Services;
 
-namespace Student.ConsoleTodo
+namespace ConsoleTodo.Managers;
+
+/// <summary>
+/// Управление пользовательским интерфейсом 
+/// </summary>
+public class MenuManager
 {
-    /// <summary>
-    /// Управление пользовательским интерфейсом 
-    /// </summary>
-    public class MenuManager
+    private readonly TaskService _taskService;
+
+    public MenuManager(TaskService taskService)
     {
-        private readonly TaskManager _taskManager;
+        _taskService = taskService;
+    }
 
-        public MenuManager(TaskManager TaskManager)
+    /// <summary>
+    /// Отображение меню
+    /// </summary>
+    public void ShowMainMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("Выберите действие:");
+        Console.WriteLine("1 - Посмотреть список задач");
+        Console.WriteLine("2 - Добавить задачу");
+    }
+
+    /// <summary>
+    /// Обработка выбора пользователя
+    /// </summary>
+    /// <param name="choice"></param>
+    public void ProcessInput(int choice)
+    {
+        switch (choice)
         {
-            _taskManager = TaskManager;
+            case 1:
+                ShowTasks();
+                break;
+            case 2:
+                AddTask();
+                break;
+            default:
+                Console.WriteLine("Неверный выбор");
+                break;
         }
+    }
 
-        /// <summary>
-        /// Отображение меню
-        /// </summary>
-        public void ShowMainMenu()
+    /// <summary>
+    /// Отображение задач в списке задач
+    /// </summary>
+    private void ShowTasks()
+    {
+        Console.WriteLine("Список задач:");
+        var tasks = _taskService.GetAllTasks();
+
+        if (tasks.Count == 0)
         {
-            Console.Clear();
-            Console.WriteLine("Выберите действие:");
-            Console.WriteLine("1 - Посмотреть список задач");
-            Console.WriteLine("2 - Добавить задачу");
-            Console.WriteLine("3 - Удалить задачу");
+            Console.WriteLine("Задач нет.");
         }
-
-        /// <summary>
-        /// Обработка выбора пользователя
-        /// </summary>
-        /// <param name="choice"></param>
-        public void ProcessInput(int choice)
+        else
         {
-            switch (choice)
+            for (int i = 0; i < tasks.Count; i++)
             {
-                case 1:
-                    ShowTasks();
-                    break;
-                case 2:
-                    AddTask();
-                    break;
-                case 3:
-                    RemoveTask();
-                    break;
-                default:
-                    Console.WriteLine("Неверный выбор");
-                    break;
+                Console.WriteLine($"Задача {i + 1}:");
+                Console.WriteLine($"Заголовок: {tasks[i].Title}");
+                Console.WriteLine($"Описание: {tasks[i].Description}");
+                Console.WriteLine();
             }
         }
 
-        /// <summary>
-        /// Отображение задач в списке задач
-        /// </summary>
-        private void ShowTasks()
+        WaitForEscape();
+    }
+
+    /// <summary>
+    /// Добавить задачу
+    /// </summary>
+    private void AddTask()
+    {
+        var task = new Task
         {
-            Console.WriteLine("Список задач:");
-            var tasks = _taskManager.GetTasks();
+            Title = GetInput("Введите заголовок задачи:"),
+            Description = GetInput("Введите описание задачи:")
+        };
 
-            if (tasks.Count == 0)
-            {
-                Console.WriteLine("Задач нет.");
-            }
-            else
-            {
-                for (int i = 0; i < tasks.Count; i++)
-                {
-                    Console.WriteLine($"Задача {i + 1}:");
-                    Console.WriteLine($"Заголовок: {tasks[i].Title}");
-                    Console.WriteLine($"Описание: {tasks[i].Description}");
-                    Console.WriteLine();
-                }
-            }
-            WaitForEscape();
-        }
+        _taskService.AddTask(task);
+        Console.WriteLine("Задача добавлена!");
+        WaitForContinue();
+    }
 
-        /// <summary>
-        /// Добавить задачу
-        /// </summary>
-        private void AddTask()
-        {
-            var task = new TodoItem
-            {
-                Title = GetInput("Введите заголовок задачи:"),
-                Description = GetInput("Введите описание задачи:")
-            };
+    /// <summary>
+    /// Упрощение повторяещегося кода
+    /// </summary>
+    /// <param name="prompt"></param>
+    /// <returns>чтение строки</returns>
+    private string GetInput(string prompt)
+    {
+        Console.WriteLine(prompt);
+        return Console.ReadLine();
+    }
 
-            _taskManager.AddTask(task);
-            Console.WriteLine("Задача добавлена!");
-            WaitForContinue();
-        }
+    /// <summary>
+    /// Выход в меню (для 1 выбора)
+    /// </summary>
+    private void WaitForEscape()
+    {
+        Console.WriteLine("Нажмите Esc для возврата в меню");
+        while (Console.ReadKey(true).Key != ConsoleKey.Escape) { }
+    }
 
-        /// <summary>
-        /// Удалиить задачу
-        /// </summary>
-        private void RemoveTask()
-        {
-            var tasks = _taskManager.GetTasks();
-
-            if (tasks.Count == 0)
-            {
-                Console.WriteLine("Задач для удаления нет.");
-                WaitForContinue();
-                return;
-            }
-
-            Console.Write("Введите номмер задачи для удаления:");
-            if (int.TryParse(Console.ReadLine(), out int taskNumber) &&
-                taskNumber > 0 && taskNumber <=tasks.Count)
-            {
-                _taskManager.RemoveTask(tasks[taskNumber - 1]);
-                Console.WriteLine("Задача удалена");
-            }
-            else
-            {
-                Console.WriteLine("Неверный номер задачи");
-            }
-            WaitForContinue();
-        }
-
-        /// <summary>
-        /// Упрощение повторяещегося кода
-        /// </summary>
-        /// <param name="prompt"></param>
-        /// <returns>чтение строки</returns>
-        private string GetInput(string prompt)
-        {
-            Console.WriteLine(prompt);
-            return Console.ReadLine();
-        }
-
-        /// <summary>
-        /// Выход в меню (для 1 выбора)
-        /// </summary>
-        private void WaitForEscape()
-        {
-            Console.WriteLine("Нажмите Esc для возврата в меню");
-            while (Console.ReadKey(true).Key != ConsoleKey.Escape) { }
-        }
-
-        /// <summary>
-        /// Выход в меню (для 2 и 3 выбора)
-        /// </summary>
-        private void WaitForContinue()
-        {
-            Console.WriteLine("Нажмите Enter для продолжения");
-            Console.ReadLine();
-        }
+    /// <summary>
+    /// Выход в меню (для 2 выбора)
+    /// </summary>
+    private void WaitForContinue()
+    {
+        Console.WriteLine("Нажмите Enter для продолжения");
+        Console.ReadLine();
     }
 }

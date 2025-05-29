@@ -1,8 +1,8 @@
-﻿using Student.ConsoleTodo;
-using Student.Todo.Services;
+﻿using ConsoleTodo.Managers;
+using ConsoleTodo.Services;
 
-var TaskManager = new TaskManager();
-var menuManager = new MenuManager(TaskManager);
+var taskService = new TaskService();
+var menuManager = new MenuManager(taskService);
 
 while (true)
 {
