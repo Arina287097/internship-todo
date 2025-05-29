@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Student.WindowsTodo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="clr-namespace:Student.Todo.Models;assembly=Student.Todo"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Student.WindowsTodo"
@@ -16,6 +17,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        
         <Label Grid.Column="0">Список задач</Label>
         <ListBox Grid.Row="1" x:Name="lstNames">
             <ListBox.ItemTemplate>
@@ -27,6 +29,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">
             <Label Grid.Row="0">Введите название задачи</Label>
             <TextBox x:Name="txtTaskName"/>

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Student.Todo.Models;
+using Student.Todo.Services;
 
 namespace Student.WindowsTodo
 {
@@ -29,7 +29,7 @@ namespace Student.WindowsTodo
                 return;
             }
 
-            taskManager.AddTask(new Task(title, description));
+            taskManager.AddTask(new TodoItem(title, description));
             RefreshTaskList();
 
             txtTaskName.Clear();
@@ -39,7 +39,7 @@ namespace Student.WindowsTodo
         // Кнопка удаления задачи
         private void btnRemoveTask_Click(object sender, RoutedEventArgs e)
         {
-            if (lstNames.SelectedItem is Task selectedTask)
+            if (lstNames.SelectedItem is TodoItem selectedTask)
             {
                 taskManager.RemoveTask(selectedTask);
                 RefreshTaskList();
