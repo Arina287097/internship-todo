@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace Student.WindowsTodo
+namespace WindowsTodo
 {
     /// <summary>
     /// Interaction logic for App.xaml
