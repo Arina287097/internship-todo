@@ -72,7 +72,7 @@ namespace Student.ConsoleTodo
                     Console.WriteLine();
                 }
             }
-            WaitForEscape();
+            ReturnToMenuViaEscape();
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Student.ConsoleTodo
         /// </summary>
         private void AddTask()
         {
-            var task = new TodoItem
+            var task = new TodoTask
             {
                 Title = GetInput("Введите заголовок задачи:"),
                 Description = GetInput("Введите описание задачи:")
@@ -88,7 +88,7 @@ namespace Student.ConsoleTodo
 
             _taskManager.AddTask(task);
             Console.WriteLine("Задача добавлена!");
-            WaitForContinue();
+            ReturnToMenuViaEnter();
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Student.ConsoleTodo
             if (tasks.Count == 0)
             {
                 Console.WriteLine("Задач для удаления нет.");
-                WaitForContinue();
+                ReturnToMenuViaEnter();
                 return;
             }
 
@@ -116,11 +116,11 @@ namespace Student.ConsoleTodo
             {
                 Console.WriteLine("Неверный номер задачи");
             }
-            WaitForContinue();
+            ReturnToMenuViaEnter();
         }
 
         /// <summary>
-        /// Упрощение повторяещегося кода
+        /// Запросить у пользователя ввод
         /// </summary>
         /// <param name="prompt"></param>
         /// <returns>чтение строки</returns>
@@ -131,18 +131,18 @@ namespace Student.ConsoleTodo
         }
 
         /// <summary>
-        /// Выход в меню (для 1 выбора)
+        /// Вернуться в меню через клавишу Escape
         /// </summary>
-        private void WaitForEscape()
+        private void ReturnToMenuViaEscape()
         {
             Console.WriteLine("Нажмите Esc для возврата в меню");
             while (Console.ReadKey(true).Key != ConsoleKey.Escape) { }
         }
 
         /// <summary>
-        /// Выход в меню (для 2 и 3 выбора)
+        /// Вернуться в меню через клавишу Enter
         /// </summary>
-        private void WaitForContinue()
+        private void ReturnToMenuViaEnter()
         {
             Console.WriteLine("Нажмите Enter для продолжения");
             Console.ReadLine();

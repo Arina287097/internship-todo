@@ -29,7 +29,7 @@ namespace Student.WindowsTodo
                 return;
             }
 
-            taskManager.AddTask(new TodoItem(title, description));
+            taskManager.AddTask(new TodoTask(title, description));
             RefreshTaskList();
 
             txtTaskName.Clear();
@@ -39,7 +39,7 @@ namespace Student.WindowsTodo
         // Кнопка удаления задачи
         private void btnRemoveTask_Click(object sender, RoutedEventArgs e)
         {
-            if (lstNames.SelectedItem is TodoItem selectedTask)
+            if (lstNames.SelectedItem is TodoTask selectedTask)
             {
                 taskManager.RemoveTask(selectedTask);
                 RefreshTaskList();
@@ -51,7 +51,7 @@ namespace Student.WindowsTodo
         }
 
         /// <summary>
-        /// Обновление списка задач
+        /// Обновить списка задач
         /// </summary>
         private void RefreshTaskList()
         {

@@ -3,7 +3,7 @@
     /// <summary>
     /// Задача
     /// </summary>
-    public class TodoItem
+    public class TodoTask
     {
         /// <summary>
         /// Заголовок задачи
@@ -16,10 +16,10 @@
         public string Description { get; set; }
 
         // для инциализации объекта 
-        public TodoItem() { }
+        public TodoTask() { }
 
         // Конструктор с параметрами name и description
-        public TodoItem(string title, string description)
+        public TodoTask(string title, string description)
         {
             Title = title;
             Description = description;

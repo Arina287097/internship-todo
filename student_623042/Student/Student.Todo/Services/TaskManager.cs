@@ -1,67 +1,36 @@
-﻿using System.Text.Json;
-using Student.Todo.Models;
+﻿using Student.Todo.Models;
 
 namespace Student.Todo.Services
 {
     /// <summary>
-    /// Управлять Задачами
+    /// Диспетчер задач
     /// </summary>
     public class TaskManager
     {
-        private List<TodoItem> tasks = new List<TodoItem>();
-        private const string SaveFilePath = "tasks.json";
-
-        public TaskManager() => LoadTasks();
-
-        /// <summary>
-        /// Создать новый экземпляр менеджера задач
-        /// </summary>
+        private List<TodoTask> tasks = new List<TodoTask>();
 
         /// <summary>
         /// Добавить задачу
         /// </summary>
         /// <param name="task">Задача</param>
-        public void AddTask(TodoItem task)
+        public void AddTask(TodoTask task)
         {
             tasks.Add(task);
-            SaveTasks();
         }
 
         /// <summary>
         /// Удалить задачу
         /// </summary>
         /// <param name="task">Задача</param>
-        public void RemoveTask(TodoItem task)
+        public void RemoveTask(TodoTask task)
         {
             tasks.Remove(task);
-            SaveTasks();
         }
 
         /// <summary>
         /// Получить список задач
         /// </summary>
         /// <returns>Список задач</returns>
-        public List<TodoItem> GetTasks() => tasks;
-
-        /// <summary>
-        /// Проверка существования файла tasks.json
-        /// </summary>
-        private void LoadTasks()
-        {
-            if (File.Exists(SaveFilePath))
-            {
-                string json = File.ReadAllText(SaveFilePath);
-                tasks = JsonSerializer.Deserialize<List<TodoItem>>(json) ?? new List<TodoItem>();
-            }
-        }
-
-        /// <summary>
-        /// Преобразовать список задач в JSON-строку
-        /// </summary>
-        private void SaveTasks()
-        {
-            string json = JsonSerializer.Serialize(tasks);
-            File.WriteAllText(SaveFilePath, json);
-        }
+        public List<TodoTask> GetTasks() => tasks;
     }
 }
