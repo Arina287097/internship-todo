@@ -28,6 +28,11 @@ namespace Student.WindowsTodo
                 MessageBox.Show("Пожалуйста, введите название задачи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                MessageBox.Show("Пожалуйста, введите описание задачи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             taskManager.AddTask(new TodoTask(title, description));
             RefreshTaskList();
@@ -51,7 +56,7 @@ namespace Student.WindowsTodo
         }
 
         /// <summary>
-        /// Обновить списка задач
+        /// Обновить список задач
         /// </summary>
         private void RefreshTaskList()
         {

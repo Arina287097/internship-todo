@@ -30,10 +30,10 @@ namespace Student.ConsoleTodo
         /// <summary>
         /// Обработка выбора пользователя
         /// </summary>
-        /// <param name="choice"></param>
-        public void ProcessInput(int choice)
+        /// <param name="choiceNumber">Номер выбора</param>
+        public void ProcessInput(int choiceNumber)
         {
-            switch (choice)
+            switch (choiceNumber)
             {
                 case 1:
                     ShowTasks();
@@ -122,11 +122,11 @@ namespace Student.ConsoleTodo
         /// <summary>
         /// Запросить у пользователя ввод
         /// </summary>
-        /// <param name="prompt"></param>
+        /// <param name="input">Текст запроса на ввод</param>
         /// <returns>чтение строки</returns>
-        private string GetInput(string prompt)
+        private string GetInput(string input)
         {
-            Console.WriteLine(prompt);
+            Console.WriteLine(input);
             return Console.ReadLine();
         }
 
