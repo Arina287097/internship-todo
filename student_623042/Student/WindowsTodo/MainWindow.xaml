@@ -36,4 +36,4 @@
             <Button x:Name="btnRemove" Margin="0,5,0,0" Click="btnRemoveTask_Click">Удалить задачу</Button>
         </StackPanel>
     </Grid>
-    </Window>
+</Window>

@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Student.WindowsTodo
+﻿namespace Student.Todo.Models
 {
     /// <summary>
     /// Задача
     /// </summary>
-    public class Task
+    public class TodoTask
     {
         /// <summary>
         /// Заголовок задачи
@@ -18,18 +15,13 @@ namespace Student.WindowsTodo
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// Конструктор с параметрами name и description
-        /// </summary>
-        /// <param name="name">Название задачи</param>
-        /// <param name="description">Описание задачи</param>
         // для инциализации объекта 
-        public Task () { }
+        public TodoTask() { }
 
         // Конструктор с параметрами name и description
-        public Task(string name, string description)
+        public TodoTask(string title, string description)
         {
-            Title = name;
+            Title = title;
             Description = description;
         }
 
@@ -39,7 +31,7 @@ namespace Student.WindowsTodo
         /// <returns>Строковое значение задачи</returns>
         public override string ToString()
         {
-            return $"{Title}-{Description}";
+            return $"{Title} - {Description}";
         }
     }
 }

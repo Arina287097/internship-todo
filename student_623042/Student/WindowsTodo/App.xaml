@@ -1,7 +1,7 @@
-﻿<Application x:Class="Student.WindowsTodo.App"
+﻿<Application x:Class="WindowsTodo.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Student.WindowsTodo"
+             xmlns:local="clr-namespace:WindowsTodo"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

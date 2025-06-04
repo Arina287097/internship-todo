@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Student.Todo.Services;
+using Student.Todo.Models;
 
 namespace Student.WindowsTodo
 {
@@ -14,23 +14,28 @@ namespace Student.WindowsTodo
         public MainWindow()
         {
             InitializeComponent();
+            RefreshTaskList();
         }
 
-        // Кнопка для добавления задачи
+        // Кнопка добавления задачи
         private void btnAddName_Click(object sender, RoutedEventArgs e)
         {
-            var name = txtTaskName.Text.Trim();
-            var description = txtDescription.Text.Trim();
+            string title = txtTaskName.Text.Trim();
+            string description = txtDescription.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(title))
             {
                 MessageBox.Show("Пожалуйста, введите название задачи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                MessageBox.Show("Пожалуйста, введите описание задачи.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            var task = new Task(name, description);
-            taskManager.AddTask(task);
-            UpdateInterfaceTaskList();
+            taskManager.AddTask(new TodoTask(title, description));
+            RefreshTaskList();
 
             txtTaskName.Clear();
             txtDescription.Clear();
@@ -39,10 +44,10 @@ namespace Student.WindowsTodo
         // Кнопка удаления задачи
         private void btnRemoveTask_Click(object sender, RoutedEventArgs e)
         {
-            if (lstNames.SelectedItem is Task selectedTask)
+            if (lstNames.SelectedItem is TodoTask selectedTask)
             {
                 taskManager.RemoveTask(selectedTask);
-                UpdateInterfaceTaskList();
+                RefreshTaskList();
             }
             else
             {
@@ -51,9 +56,9 @@ namespace Student.WindowsTodo
         }
 
         /// <summary>
-        /// Обновление списка задач
+        /// Обновить список задач
         /// </summary>
-        private void UpdateInterfaceTaskList()
+        private void RefreshTaskList()
         {
             lstNames.Items.Clear();
             foreach (var task in taskManager.GetTasks())

@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Student.Todo.Models;
 
-namespace Student.WindowsTodo
+namespace Student.Todo.Services
 {
     /// <summary>
-    /// Управлять Задачами
+    /// Диспетчер задач
     /// </summary>
     public class TaskManager
     {
-        private List<Task> tasks = new List<Task>();
+        private List<TodoTask> tasks = new List<TodoTask>();
 
         /// <summary>
         /// Добавить задачу
         /// </summary>
         /// <param name="task">Задача</param>
-        public void AddTask(Task task)
+        public void AddTask(TodoTask task)
         {
             tasks.Add(task);
         }
@@ -23,7 +22,7 @@ namespace Student.WindowsTodo
         /// Удалить задачу
         /// </summary>
         /// <param name="task">Задача</param>
-        public void RemoveTask(Task task)
+        public void RemoveTask(TodoTask task)
         {
             tasks.Remove(task);
         }
@@ -32,9 +31,6 @@ namespace Student.WindowsTodo
         /// Получить список задач
         /// </summary>
         /// <returns>Список задач</returns>
-        public List<Task> GetTasks()
-        {
-            return tasks;
-        }
+        public List<TodoTask> GetTasks() => tasks;
     }
 }
