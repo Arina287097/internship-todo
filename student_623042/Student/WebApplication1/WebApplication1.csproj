@@ -183,9 +183,14 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Content Include="Delete.aspx" />
-    <Compile Include="Delete.aspx.cs">
-      <DependentUpon>Delete.aspx</DependentUpon>
+    <Content Include="ConfirmDelete.aspx" />
+    <Content Include="EditTask.aspx" />
+    <Compile Include="EditTask.aspx.cs">
+      <DependentUpon>EditTask.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfirmDelete.aspx.cs">
+      <DependentUpon>ConfirmDelete.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.cs">

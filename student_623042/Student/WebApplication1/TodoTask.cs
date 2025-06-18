@@ -7,6 +7,7 @@ namespace WebApplication1
     /// </summary>
     public class TodoTask
     {
+        public int Id { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         /// <summary>

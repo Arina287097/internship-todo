@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApplication1
 {
@@ -27,6 +28,12 @@ namespace WebApplication1
         {
             tasks.Remove(task);
         }
+
+        public TodoTask GetTaskById(int id)
+        {
+            return tasks.FirstOrDefault(t => t.Id == id);
+        }
+
 
         /// <summary>
         /// Получить список задач
