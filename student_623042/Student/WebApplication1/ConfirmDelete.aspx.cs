@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Web.UI;
+using Student.Todo.Services;
+using Student.Todo.Models;
 
 namespace WebApplication1
 {
     public partial class ConfirmDelete : Page
     { /*
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack && Session["DeleteIndex"] is int index)
+            protected void Page_Load(object sender, EventArgs e)
             {
-                var taskManager = Session["TaskManager"] as TaskManager;
-                if (taskManager != null && index < taskManager.GetTasks().Count)
+                if (!IsPostBack && Session["DeleteIndex"] is int index)
                 {
-                    TaskTitle.Text = taskManager.GetTasks()[index].Title;
+                    var taskManager = Session["TaskManager"] as TaskManager;
+                    if (taskManager != null && index < taskManager.GetTasks().Count)
+                    {
+                        TaskTitle.Text = taskManager.GetTasks()[index].Title;
+                    }
                 }
             }
-        }
-        */
+            */
 
         /// <summary>
         /// Удалить задачу и вернуться на главную страницу
@@ -46,4 +48,5 @@ namespace WebApplication1
             Response.Redirect("Default.aspx");
         }
     }
+
 }
