@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.Todo", "Student.Tod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTodo", "..\ConsoleTodo\ConsoleTodo.csproj", "{649242C2-5ED2-A81D-6F51-94E4CB3DB948}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsTodo", "..\WindowsTodo\WindowsTodo.csproj", "{51D2D5DE-70EA-5890-CD64-B485AB53EA76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{649242C2-5ED2-A81D-6F51-94E4CB3DB948}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649242C2-5ED2-A81D-6F51-94E4CB3DB948}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649242C2-5ED2-A81D-6F51-94E4CB3DB948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D2D5DE-70EA-5890-CD64-B485AB53EA76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D2D5DE-70EA-5890-CD64-B485AB53EA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D2D5DE-70EA-5890-CD64-B485AB53EA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D2D5DE-70EA-5890-CD64-B485AB53EA76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
