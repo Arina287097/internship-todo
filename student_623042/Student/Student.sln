@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.WebFormsTodo", "WebApplication1\Student.WebFormsTodo.csproj", "{A2BF9173-BFE4-44E9-B8FE-2EDA4F738271}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.WebFormsTodo", "Student.WebFormsTodo\Student.WebFormsTodo.csproj", "{A2BF9173-BFE4-44E9-B8FE-2EDA4F738271}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.Todo", "Student.Todo\Student.Todo.csproj", "{432E60B4-AA49-4632-ADEB-A3B818F6324C}"
 EndProject
