@@ -7,7 +7,7 @@
 // </автоматически создаваемое>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1
+namespace Student.WebFormsTodo
 {
 
 
@@ -15,22 +15,31 @@ namespace WebApplication1
     {
 
         /// <summary>
-        /// TasksGrid элемент управления.
+        /// bAddTask элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView TasksGrid;
+        protected global::System.Web.UI.WebControls.Button bAddTask;
 
         /// <summary>
-        /// TaskForm элемент управления.
+        /// gvTask элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel TaskForm;
+        protected global::System.Web.UI.WebControls.GridView gvTask;
+
+        /// <summary>
+        /// pTaskForm элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически созданное поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pTaskForm;
 
         /// <summary>
         /// FormTitle элемент управления.
@@ -42,13 +51,13 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.Label FormTitle;
 
         /// <summary>
-        /// TitleTextBox элемент управления.
+        /// tbTitle элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TitleTextBox;
+        protected global::System.Web.UI.WebControls.TextBox tbTitle;
 
         /// <summary>
         /// TitleError элемент управления.
@@ -60,13 +69,13 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.Label TitleError;
 
         /// <summary>
-        /// DescriptionTextBox элемент управления.
+        /// tbDescription элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DescriptionTextBox;
+        protected global::System.Web.UI.WebControls.TextBox tbDescription;
 
         /// <summary>
         /// DescriptionError элемент управления.
@@ -78,30 +87,21 @@ namespace WebApplication1
         protected global::System.Web.UI.WebControls.Label DescriptionError;
 
         /// <summary>
-        /// SaveButton элемент управления.
+        /// bSave элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveButton;
+        protected global::System.Web.UI.WebControls.Button bSave;
 
         /// <summary>
-        /// CancelButton элемент управления.
+        /// bCancel элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
-
-        /// <summary>
-        /// AddTaskButton элемент управления.
-        /// </summary>
-        /// <remarks>
-        /// Автоматически созданное поле.
-        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddTaskButton;
+        protected global::System.Web.UI.WebControls.Button bCancel;
     }
 }

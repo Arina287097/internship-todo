@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ConfirmDelete" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmDelete.aspx.cs" Inherits="WebApplication1.ConfirmDelete" %>
+﻿<%@ Page Title="ConfirmDelete" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmDelete.aspx.cs" Inherits="Student.WebFormsTodo.ConfirmDelete" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
      <h1>Удаление задачи</h1>

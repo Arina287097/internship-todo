@@ -8,8 +8,6 @@ namespace Student.WebFormsTodo
 {
     public partial class EditTask : Page
     {
-        private readonly TaskManager _taskManager = new TaskManager();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -25,8 +23,6 @@ namespace Student.WebFormsTodo
 
                     if (task != null)
                     {
-                        
-
                         // Сохраняем заголовок и описание задачи в ViewState для дальнейшего использования
                         ViewState["OriginalTitle"] = task.Title;
                         ViewState["OriginalDescription"] = task.Description;
@@ -53,17 +49,11 @@ namespace Student.WebFormsTodo
                 string originalTitle = ViewState["OriginalTitle"].ToString();
                 string originalDescription = ViewState["OriginalDescription"].ToString();
 
-                // Получаем новые значения заголовка и описания задачи из текстовых полей
-                
-
                 // Получаем задачу для обновления из TaskManager
                 var taskToUpdate = _taskManager.GetTasks().FirstOrDefault(t => t.Title == originalTitle && t.Description == originalDescription);
 
                 if (taskToUpdate != null)
                 {
-                    // Обновляем свойства задачи
-                    
-
                     // Перенаправляем обратно на страницу списка задач
                     Response.Redirect("TasksList.aspx");
                 }
@@ -80,5 +70,7 @@ namespace Student.WebFormsTodo
             // Перенаправляем обратно на страницу списка задач
             Response.Redirect("TasksList.aspx");
         }
+
+        private readonly TaskManager _taskManager = new TaskManager();
     }
 }

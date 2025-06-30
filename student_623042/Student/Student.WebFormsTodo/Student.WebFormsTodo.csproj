@@ -119,6 +119,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Compile Include="Default.aspx.designer.cs" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -197,9 +198,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,7 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Student.Todo\Student.Todo.csproj">
-      <Project>{432e60b4-aa49-4632-adeb-a3b818f6324c}</Project>
+      <Project>{c8c92da5-fe01-4fb6-bd38-e00b19a7c4a6}</Project>
       <Name>Student.Todo</Name>
     </ProjectReference>
   </ItemGroup>

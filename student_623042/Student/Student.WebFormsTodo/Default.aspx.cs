@@ -6,18 +6,11 @@ using Student.Todo.Services;
 using Student.Todo.Models;
 
 
-namespace WebApplication1
+namespace Student.WebFormsTodo
 {
     public partial class _Default : Page
     {
 
-        private TaskManager taskManager;
-
-        /// <summary>
-        /// Обработчик загрузки страницы
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             taskManager = Session["TaskManager"] as TaskManager ?? new TaskManager();
@@ -29,102 +22,54 @@ namespace WebApplication1
             }
         }
 
-        /// <summary>
-        /// Привязать список задач из менеджера задач к GridView
-        /// </summary>
-        private void BindTasks()
-        {
-            TasksGrid.DataSource = taskManager.GetTasks();
-            TasksGrid.DataBind();
-        }
-
-        /// <summary>
-        /// Отобразить форму для ввода задачи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Отобразить форму для ввода задачи
         protected void AddTask_Click(object sender, EventArgs e)
         {
-            TaskForm.Visible = true;
+            pTaskForm.Visible = true;
             FormTitle.Text = "Добавить задачу";
-            TitleTextBox.Text = "";
-            DescriptionTextBox.Text = "";
+            tbTitle.Text = "";
+            tbDescription.Text = "";
             ViewState["EditIndex"] = null;
 
             TitleError.Visible = false;
             DescriptionError.Visible = false;
         }
 
-
-        /// <summary>
-        /// Изменит задачу 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Изменит задачу 
         protected void EditTask_Click(object sender, EventArgs e)
         {
-            int index = int.Parse((sender as Button).CommandArgument);
+            int index = Convert.ToInt32(((Button)sender).CommandArgument);
             var task = taskManager.GetTasks()[index];
 
-            TaskForm.Visible = true;
+            pTaskForm.Visible = true;
             FormTitle.Text = "Изменить задачу";
-            TitleTextBox.Text = task.Title;
-            DescriptionTextBox.Text = task.Description;
+            tbTitle.Text = task.Title;
+            tbDescription.Text = task.Description;
             ViewState["EditIndex"] = index;
 
             TitleError.Visible = false;
             DescriptionError.Visible = false;
         }
 
-        /// <summary>
-        /// Переход на страницу для подтверждения удаления
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Переход на страницу для подтверждения удаления
         protected void DeleteTask_Click(object sender, EventArgs e)
         {
-            int index = int.Parse((sender as Button).CommandArgument);
+            int index = Convert.ToInt32(((Button)sender).CommandArgument);
             Session["DeleteIndex"] = index;
             Response.Redirect("ConfirmDelete.aspx");
         }
 
-        /// <summary>
-        /// Сохранить новую задачу или сохранить изменения задачи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Сохранить новую задачу или сохранить изменения задачи
         protected void SaveTask_Click(object sender, EventArgs e)
         {
-            bool isValid = true;
-
-            if (string.IsNullOrWhiteSpace(TitleTextBox.Text))
+            if (!ValidateTaskForm())
             {
-                TitleError.Visible = true;
-                TitleError.Text = "Введите название задачи";
-                isValid = false;
-            }
-            else
-            {
-                TitleError.Visible = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(DescriptionTextBox.Text))
-            {
-                DescriptionError.Visible = true;
-                DescriptionError.Text = "Введите описание задачи";
-                isValid = false;
-            }
-            else
-            {
-                DescriptionError.Visible = false;
-            }
-
-            if (!isValid)
                 return;
+            }
 
             // Если валидация прошла успешно
             int? editIndex = ViewState["EditIndex"] as int?;
-            var task = new TodoTask(TitleTextBox.Text.Trim(), DescriptionTextBox.Text.Trim());
+            var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
 
             if (editIndex.HasValue)
             {
@@ -135,18 +80,56 @@ namespace WebApplication1
                 taskManager.AddTask(task);
             }
 
-            TaskForm.Visible = false;
+            pTaskForm.Visible = false;
             BindTasks();
         }
 
-        /// <summary>
-        /// Скрыть форму редактирования без сохранения изменений
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
+        // Скрыть форму редактирования без сохранения изменений
         protected void CancelTask_Click(object sender, EventArgs e)
         {
-            TaskForm.Visible = false;
+            pTaskForm.Visible = false;
+        }
+
+        private TaskManager taskManager;
+
+        /// <summary>
+        /// Привязать список задач из менеджера задач к GridView
+        /// </summary>
+        private void BindTasks()
+        {
+            gvTask.DataSource = taskManager.GetTasks();
+            gvTask.DataBind();
+        }
+        private bool ValidateTaskForm()
+        {
+            bool isValid = true;
+
+            // Валидация названия
+            if (string.IsNullOrWhiteSpace(tbTitle.Text))
+            {
+                TitleError.Visible = true;
+                TitleError.Text = "Введите название задачи";
+                isValid = false;
+            }
+            else
+            {
+                TitleError.Visible = false;
+            }
+
+            // Валидация описания
+            if (string.IsNullOrWhiteSpace(tbDescription.Text))
+            {
+                DescriptionError.Visible = true;
+                DescriptionError.Text = "Введите описание задачи";
+                isValid = false;
+            }
+            else
+            {
+                DescriptionError.Visible = false;
+            }
+
+            return isValid;
         }
     }
 }

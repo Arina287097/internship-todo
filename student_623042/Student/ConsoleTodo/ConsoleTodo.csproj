@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Student.Todo\Student.Todo.csproj" />
-    <ProjectReference Include="..\Student\Student.Todo\Student.Todo.csproj" />
   </ItemGroup>
 
 </Project>
