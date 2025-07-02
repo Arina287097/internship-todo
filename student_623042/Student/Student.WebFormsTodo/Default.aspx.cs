@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Student.Todo.Models;
+using Student.Todo.Services;
+using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Student.Todo.Services;
-using Student.Todo.Models;
 
 
 namespace Student.WebFormsTodo
@@ -101,6 +100,11 @@ namespace Student.WebFormsTodo
             gvTask.DataSource = taskManager.GetTasks();
             gvTask.DataBind();
         }
+
+        /// <summary>
+        /// Валидация входных данных задачи
+        /// </summary>
+        /// <returns>Булево значение</returns>
         private bool ValidateTaskForm()
         {
             bool isValid = true;
