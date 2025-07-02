@@ -8,10 +8,9 @@
         Title="Task Manager" Height="400" Width="560">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -28,9 +27,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">
-            <Label Grid.Row="0">Введите название задачи</Label>
+            <Label>Введите название задачи</Label>
             <TextBox x:Name="txtTaskName"/>
-            <Label Grid.Column="0">Введите описание задачи</Label>
+            <Label>Введите описание задачи</Label>
             <TextBox x:Name="txtDescription"/>
             <Button x:Name="btnAdd" Margin="0,5,0,0" Click="btnAddName_Click">Добавить задачу</Button>
             <Button x:Name="btnRemove" Margin="0,5,0,0" Click="btnRemoveTask_Click">Удалить задачу</Button>
