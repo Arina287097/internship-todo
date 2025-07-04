@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Student.WebForms
+namespace Student.WebFormsTodo
 {
 
 

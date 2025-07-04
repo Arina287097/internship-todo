@@ -1,5 +1,0 @@
-﻿CREATE TABLE Tasks (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Title NVARCHAR(100) NOT NULL,
-    Description NVARCHAR(MAX) NOT NULL
-);

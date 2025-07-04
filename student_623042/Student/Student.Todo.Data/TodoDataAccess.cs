@@ -1,5 +1,4 @@
-﻿// Student.Todo.Data/TodoDataAccess.cs
-using Student.Todo.Models;
+﻿using Student.Todo.Models;
 using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Student.WebForms
+namespace Student.WebFormsTodo
 {
     public partial class About : Page
     {
