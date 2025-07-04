@@ -5,6 +5,7 @@
     /// </summary>
     public class TodoTask
     {
+        public int Id { get; set; }
         /// <summary>
         /// Заголовок задачи
         /// </summary>
