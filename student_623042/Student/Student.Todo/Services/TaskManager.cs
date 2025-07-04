@@ -1,10 +1,13 @@
 ﻿using Student.Todo.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Student.Todo.Services
 {
     /// <summary>
     /// Диспетчер задач
     /// </summary>
+    [Serializable]
     public class TaskManager
     {
         private List<TodoTask> tasks = new List<TodoTask>();
@@ -31,6 +34,9 @@ namespace Student.Todo.Services
         /// Получить список задач
         /// </summary>
         /// <returns>Список задач</returns>
-        public List<TodoTask> GetTasks() => tasks;
+        public List<TodoTask> GetTasks()
+        {
+            return tasks ?? new List<TodoTask>(); 
+        }
     }
 }
