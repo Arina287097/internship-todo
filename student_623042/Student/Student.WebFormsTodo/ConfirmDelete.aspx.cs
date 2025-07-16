@@ -31,6 +31,7 @@ namespace Student.WebFormsTodo
                 _dataAccess = new TodoAccess(connectionString);
             }
         }
+
         // Удалить задачу из БД
         protected void ConfirmDeleteButton_Click(object sender, EventArgs e)
         {
@@ -104,6 +105,7 @@ namespace Student.WebFormsTodo
                     true);
             }
         }
+
         // Возврат на главную страницу
         protected void CancelButton_Click(object sender, EventArgs e)
         {

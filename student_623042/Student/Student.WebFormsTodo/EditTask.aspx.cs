@@ -35,6 +35,7 @@ namespace Student.WebFormsTodo
                 }
             }
         }
+
         // Обработывает события нажатия кнопки обновления задачи
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -55,6 +56,7 @@ namespace Student.WebFormsTodo
                 }
             }
         }
+
         // Вернуться на страницу списка задач
         protected void btnCancel_Click(object sender, EventArgs e)
         {
