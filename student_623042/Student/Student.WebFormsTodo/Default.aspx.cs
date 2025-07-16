@@ -222,7 +222,7 @@ namespace Student.WebFormsTodo
         /// <summary>
         /// Отображает всплывающее сообщение об ошибке на клиентской стороне
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">Текст ошибки</param>
         private void ShowErrorMessage(string message)
         {
             ClientScript.RegisterStartupScript(
