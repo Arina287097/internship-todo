@@ -6,6 +6,11 @@
     public class TodoTask
     {
         /// <summary>
+        /// ИД задачи
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Заголовок задачи
         /// </summary>
         public string Title { get; set; }
