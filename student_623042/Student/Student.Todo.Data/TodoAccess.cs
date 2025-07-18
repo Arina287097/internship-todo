@@ -17,7 +17,7 @@ namespace Student.Todo.Data
         /// <summary>
         /// Сохранить задачу (добавление или обновление)
         /// </summary>
-        /// <param name="task">Задача для сохранения</param>
+        /// <param name="task">Задача</param>
         public void SaveTask(TodoTask task)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -69,7 +69,7 @@ namespace Student.Todo.Data
         /// <summary>
         /// Удалить задачу
         /// </summary>
-        /// <param name="id">ИД для удаления</param>
+        /// <param name="id">ИД задачи</param>
         public void DeleteTask(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
