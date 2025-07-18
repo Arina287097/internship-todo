@@ -1,73 +1,62 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Student.Todo.Data;
+using Student.Todo.Models;
+using Student.Todo.Services;
+using System;
+using System.Configuration;
 using System.Linq;
 using System.Web.UI;
-using Student.Todo.Services;
-using Student.Todo.Models;
 
 namespace Student.WebFormsTodo
 {
     public partial class EditTask : Page
     {
+        private ITodoRepository _repository;
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Инициализация EF репозитория
+            var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            _repository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
+
             if (!IsPostBack)
             {
-                // Получаем заголовок и описание задачи из строки запроса
-                if (Request.QueryString["title"] != null && Request.QueryString["description"] != null)
+                if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int id))
                 {
-                    string title = Request.QueryString["title"];
-                    string description = Request.QueryString["description"];
-
-                    // Получаем задачу из TaskManager
-                    var task = _taskManager.GetTasks().FirstOrDefault(t => t.Title == title && t.Description == description);
-
+                    var task = _repository.GetTaskById(id);
                     if (task != null)
                     {
-                        // Сохраняем заголовок и описание задачи в ViewState для дальнейшего использования
-                        ViewState["OriginalTitle"] = task.Title;
-                        ViewState["OriginalDescription"] = task.Description;
+                        tbTitle.Text = task.Title;
+                        tbDescription.Text = task.Description;
+                        ViewState["TaskId"] = task.Id;
                     }
                     else
                     {
-                        // Если задача не найдена, перенаправляем обратно на страницу списка задач
-                        Response.Redirect("TasksList.aspx");
+                        Response.Redirect("Default.aspx");
                     }
                 }
                 else
                 {
-                    // Если заголовок или описание задачи не переданы, перенаправляем обратно на страницу списка задач
-                    Response.Redirect("TasksList.aspx");
+                    Response.Redirect("Default.aspx");
                 }
             }
         }
 
+
+        // Обработывает события нажатия кнопки обновления задачи
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid)
+            if (ViewState["TaskId"] is int id)
             {
-                // Получаем оригинальный заголовок и описание задачи из ViewState
-                string originalTitle = ViewState["OriginalTitle"].ToString();
-                string originalDescription = ViewState["OriginalDescription"].ToString();
-
-                // Получаем задачу для обновления из TaskManager
-                var taskToUpdate = _taskManager.GetTasks().FirstOrDefault(t => t.Title == originalTitle && t.Description == originalDescription);
-
-                if (taskToUpdate != null)
-                {
-                    // Перенаправляем обратно на страницу списка задач
-                    Response.Redirect("TasksList.aspx");
-                }
-                else
-                {
-                    // Если задача не найдена, перенаправляем обратно на страницу списка задач
-                    Response.Redirect("TasksList.aspx");
-                }
+                var task = new TodoTask(tbTitle.Text, tbDescription.Text) { Id = id };
+                _repository.UpdateTask(task);
             }
+            Response.Redirect("Default.aspx");
         }
 
+        // Вернуться на страницу списка задач
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            // Перенаправляем обратно на страницу списка задач
             Response.Redirect("TasksList.aspx");
         }
 
