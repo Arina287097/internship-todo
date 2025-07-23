@@ -9,7 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Site.Master" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Site.Master" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Student.Todo\Student.Todo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Site.Master.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>
