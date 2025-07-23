@@ -1,4 +1,5 @@
-﻿using Student.Todo.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Student.Todo.Data;
 using Student.Todo.Models;
 using Student.Todo.Services;
 using System;
@@ -7,39 +8,38 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace Student.WebFormsTodo
 {
     public partial class _Default : Page
     {
         private TaskManager _taskManager;
-        private ITodoRepository _repository;
+        private TodoAccess _dataAccess;
+        private ITodoRepository _efRepository;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Инициализация репозитория
             var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
             optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
-            _repository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
+            _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
 
-            // Инициализация TaskManager
-            _taskManager = Session["TaskManager"] as TaskManager ?? new TaskManager();
+            _taskManager = Session["TaskManager"] as TaskManager;
+
+            if (_taskManager == null)
+            {
+                _taskManager = new TaskManager();
+                Session["TaskManager"] = _taskManager;
+
+                var tasks = _efRepository.GetAllTasks();
+                _taskManager.GetTasks().AddRange(tasks);
+
+                Debug.WriteLine("Создан новый TaskManager с задачами из БД");
+            }
 
             if (!IsPostBack)
             {
-                // Загрузка задач из БД при первом обращении
-                if (_taskManager.GetTasks().Count == 0)
-                {
-                    var tasksFromDb = _repository.GetAllTasks();
-                    _taskManager.GetTasks().AddRange(tasksFromDb);
-                }
-
                 BindTasks();
             }
-
-            Session["TaskManager"] = _taskManager;
         }
 
         // Отобразить форму для ввода задачи
@@ -89,52 +89,59 @@ namespace Student.WebFormsTodo
         {
             try
             {
-                // Получаем индекс задачи
                 int index = Convert.ToInt32(((Button)sender).CommandArgument);
-
-                // Проверяем корректность индекса
                 if (index < 0 || index >= _taskManager.GetTasks().Count)
                 {
-                    ShowErrorMessage("Неверный индекс задачи");
-                    return;
+                    throw new ArgumentOutOfRangeException("Неверный индекс задачи");
                 }
 
-                // Сохраняем индекс в сессии для подтверждения
-                Session["DeleteIndex"] = index;
+                var task = _taskManager.GetTasks()[index];
 
-                // Перенаправляем на страницу подтверждения
+                if (task.Id > 0)
+                {
+                    _efRepository.DeleteTask(task.Id);
+                }
+
+                Session["DeleteIndex"] = index;
                 Response.Redirect("ConfirmDelete.aspx");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Ошибка: {ex.Message}");
-                ShowErrorMessage("Ошибка при подготовке к удалению");
+                Debug.WriteLine($"Ошибка при удалении задачи: {ex.Message}");
+                ShowErrorMessage("Ошибка при удалении задачи");
             }
+            Session["TaskManager"] = _taskManager;
         }
 
         // Сохранить новую задачу или сохранить изменения задачи
         protected void SaveTask_Click(object sender, EventArgs e)
         {
-            if (!ValidateTaskForm()) return;
+                if (!ValidateTaskForm()) return;
 
-            var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
+                int? editIndex = ViewState["EditIndex"] as int?;
+                var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
 
-            if (ViewState["EditIndex"] is int index)
-            {
-                // Обновляем задачу в БД и TaskManager
-                task.Id = _taskManager.GetTasks()[index].Id;
-                _repository.UpdateTask(task);
-                _taskManager.GetTasks()[index] = task;
-            }
-            else
-            {
-                // Добавляем задачу в БД и TaskManager
-                _repository.AddTask(task);
-                _taskManager.AddTask(task);
-            }
+                if (editIndex.HasValue)
+                {
+                    // Проверка валидности индекса
+                    if (editIndex.Value < 0 || editIndex.Value >= _taskManager.GetTasks().Count)
+                    {
+                        throw new ArgumentOutOfRangeException("Неверный индекс редактируемой задачи");
+                    }
 
-            pTaskForm.Visible = false;
-            BindTasks();
+                    task.Id = _taskManager.GetTasks()[editIndex.Value].Id;
+                    _taskManager.GetTasks()[editIndex.Value] = task;
+                    _efRepository.SaveTask(task);
+                }
+                else
+                {
+                    _taskManager.AddTask(task);
+                    _efRepository.SaveTask(task);
+                }
+
+                pTaskForm.Visible = false;
+                ViewState["EditIndex"] = null;
+                BindTasks();
         }
 
         // Скрыть форму редактирования без сохранения изменений
@@ -149,8 +156,22 @@ namespace Student.WebFormsTodo
         /// </summary>
         private void BindTasks()
         {
-            gvTask.DataSource = _taskManager.GetTasks();
-            gvTask.DataBind();
+            try
+            {
+                if (gvTask == null)
+                {
+                    throw new InvalidOperationException("GridView 'gvTask' не найден на странице.");
+                }
+
+                var tasks = _taskManager?.GetTasks() ?? new List<TodoTask>();
+                gvTask.DataSource = tasks;
+                gvTask.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка при привязке задач: {ex.Message}");
+                ShowErrorMessage("Ошибка при загрузке списка задач");
+            }
         }
 
         /// <summary>

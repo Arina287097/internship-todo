@@ -3,55 +3,63 @@ using Student.Todo.Data;
 using Student.Todo.Models;
 using Student.Todo.Services;
 using System;
-using System.Configuration;
 using System.Linq;
+using System.Configuration;
 using System.Web.UI;
 
 namespace Student.WebFormsTodo
 {
     public partial class EditTask : Page
     {
-        private ITodoRepository _repository;
+        private ITodoRepository _efRepository;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Инициализация EF репозитория
-            var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
-            _repository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
-
             if (!IsPostBack)
             {
-                if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int id))
+                if (Request.QueryString["title"] != null && Request.QueryString["description"] != null)
                 {
-                    var task = _repository.GetTaskById(id);
+                    string title = Request.QueryString["title"];
+                    string description = Request.QueryString["description"];
+
+                    var task = _taskManager.GetTasks().FirstOrDefault(t => t.Title == title && t.Description == description);
+
                     if (task != null)
                     {
-                        tbTitle.Text = task.Title;
-                        tbDescription.Text = task.Description;
-                        ViewState["TaskId"] = task.Id;
+                        ViewState["OriginalTitle"] = task.Title;
+                        ViewState["OriginalDescription"] = task.Description;
                     }
                     else
                     {
-                        Response.Redirect("Default.aspx");
+                        Response.Redirect("TasksList.aspx");
                     }
                 }
                 else
                 {
-                    Response.Redirect("Default.aspx");
+                    Response.Redirect("TasksList.aspx");
                 }
             }
         }
 
-
         // Обработывает события нажатия кнопки обновления задачи
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (ViewState["TaskId"] is int id)
+            if (Page.IsValid)
             {
-                var task = new TodoTask(tbTitle.Text, tbDescription.Text) { Id = id };
-                _repository.UpdateTask(task);
+                string originalTitle = ViewState["OriginalTitle"].ToString();
+                string originalDescription = ViewState["OriginalDescription"].ToString();
+
+                var taskToUpdate = _taskManager.GetTasks().FirstOrDefault(t => t.Title == originalTitle && t.Description == originalDescription);
+
+                if (taskToUpdate != null)
+                {
+                    Response.Redirect("TasksList.aspx");
+                }
+                else
+                {
+                    Response.Redirect("TasksList.aspx");
+                }
             }
-            Response.Redirect("Default.aspx");
         }
 
         // Вернуться на страницу списка задач
