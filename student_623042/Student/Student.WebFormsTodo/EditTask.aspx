@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditTask.aspx.cs" Inherits="WebTodoApp.EditTask" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditTask.aspx.cs" Inherits="Student.WebFormsTodo.EditTask" %>
 
 <!DOCTYPE html>
 
