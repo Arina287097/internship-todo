@@ -30,7 +30,7 @@ namespace Student.WebFormsTodo
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTitle;
+        protected global::System.Web.UI.WebControls.TextBox tbTitle;
 
         /// <summary>
         /// rfvTitle элемент управления.
@@ -48,7 +48,7 @@ namespace Student.WebFormsTodo
         /// Автоматически созданное поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescription;
+        protected global::System.Web.UI.WebControls.TextBox tbDescription;
 
         /// <summary>
         /// rfvDescription элемент управления.

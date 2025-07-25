@@ -14,12 +14,12 @@
 
             <div class="form-group">
                 <label for="txtTitle">Название задачи:</label>
-                <asp:TextBox ID="txtTitle" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtTitle" runat="server" CssClass="form-control" />
                 <asp:RequiredFieldValidator ID="rfvTitle" runat="server" ControlToValidate="txtTitle" ErrorMessage="Введите название задачи" CssClass="text-danger" />
             </div>
             <div class="form-group">
                 <label for="txtDescription">Описание задачи:</label>
-                <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" />
                 <asp:RequiredFieldValidator ID="rfvDescription" runat="server" ControlToValidate="txtDescription" ErrorMessage="Введите описание задачи" CssClass="text-danger" />
             </div>
             <asp:Button ID="btnUpdate" runat="server" Text="Обновить" CssClass="btn btn-primary" OnClick="btnUpdate_Click" />

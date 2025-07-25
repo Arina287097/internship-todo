@@ -1,4 +1,5 @@
-﻿using Student.Todo.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Student.Todo.Data;
 using Student.Todo.Models;
 using Student.Todo.Services;
 using System;
@@ -13,22 +14,18 @@ namespace Student.WebFormsTodo
         private TodoAccess _dataAccess;
         private const string TaskManagerSessionKey = "TaskManager";
         private const string DeleteIndexSessionKey = "DeleteIndex";
+        private ITodoRepository _efRepository;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
+
             if (Session == null)
             {
                 throw new InvalidOperationException("Сессия не доступна");
-            }
-
-            if (!IsPostBack)
-            {
-                var connectionString = ConfigurationManager.ConnectionStrings["TodoDb"]?.ConnectionString;
-                if (string.IsNullOrEmpty(connectionString))
-                {
-                    throw new ConfigurationErrorsException("Строка подключения не найдена");
-                }
-                _dataAccess = new TodoAccess(connectionString);
             }
         }
 
@@ -69,27 +66,16 @@ namespace Student.WebFormsTodo
                     throw new InvalidOperationException("Задача не найдена");
                 }
 
-                // 6. Проверка инициализации _dataAccess
-                if (_dataAccess == null)
-                {
-                    var connectionString = ConfigurationManager.ConnectionStrings["TodoDb"]?.ConnectionString;
-                    if (string.IsNullOrEmpty(connectionString))
-                    {
-                        throw new ConfigurationErrorsException("Строка подключения не настроена");
-                    }
-                    _dataAccess = new TodoAccess(connectionString);
-                }
-
-                // 7. Удаление из БД (если задача сохранена)
+                // 6. Удаление из БД (если задача сохранена)
                 if (taskToDelete.Id > 0)
                 {
-                    _dataAccess.DeleteTask(taskToDelete.Id);
+                    _efRepository.DeleteTask(taskToDelete.Id);
                 }
 
-                // 8. Удаление из менеджера
+                // 7. Удаление из менеджера
                 taskManager.RemoveTask(taskToDelete);
 
-                // 9. Обновление сессии
+                // 8. Обновление сессии
                 Session["TaskManager"] = taskManager;
                 Session.Remove("DeleteIndex");
 

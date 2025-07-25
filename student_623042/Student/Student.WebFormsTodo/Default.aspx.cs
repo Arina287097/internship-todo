@@ -1,4 +1,5 @@
-﻿using Student.Todo.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Student.Todo.Data;
 using Student.Todo.Models;
 using Student.Todo.Services;
 using System;
@@ -14,18 +15,13 @@ namespace Student.WebFormsTodo
     {
         private TaskManager _taskManager;
         private TodoAccess _dataAccess;
+        private ITodoRepository _efRepository;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (_dataAccess == null)
-            {
-                var connectionString = ConfigurationManager.ConnectionStrings["TodoDb"]?.ConnectionString;
-                if (string.IsNullOrEmpty(connectionString))
-                {
-                    throw new ConfigurationErrorsException("Строка подключения 'TodoDb' не найдена в конфигурации");
-                }
-                _dataAccess = new TodoAccess(connectionString);
-            }
+            var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
 
             _taskManager = Session["TaskManager"] as TaskManager;
 
@@ -34,7 +30,7 @@ namespace Student.WebFormsTodo
                 _taskManager = new TaskManager();
                 Session["TaskManager"] = _taskManager;
 
-                var tasks = _dataAccess.GetTasks();
+                var tasks = _efRepository.GetAllTasks();
                 _taskManager.GetTasks().AddRange(tasks);
 
                 Debug.WriteLine("Создан новый TaskManager с задачами из БД");
@@ -103,7 +99,7 @@ namespace Student.WebFormsTodo
 
                 if (task.Id > 0)
                 {
-                    _dataAccess.DeleteTask(task.Id);
+                    _efRepository.DeleteTask(task.Id);
                 }
 
                 Session["DeleteIndex"] = index;
@@ -120,8 +116,6 @@ namespace Student.WebFormsTodo
         // Сохранить новую задачу или сохранить изменения задачи
         protected void SaveTask_Click(object sender, EventArgs e)
         {
-            try
-            {
                 if (!ValidateTaskForm()) return;
 
                 int? editIndex = ViewState["EditIndex"] as int?;
@@ -137,23 +131,17 @@ namespace Student.WebFormsTodo
 
                     task.Id = _taskManager.GetTasks()[editIndex.Value].Id;
                     _taskManager.GetTasks()[editIndex.Value] = task;
-                    _dataAccess.SaveTask(task);
+                    _efRepository.SaveTask(task);
                 }
                 else
                 {
                     _taskManager.AddTask(task);
-                    _dataAccess.SaveTask(task);
+                    _efRepository.SaveTask(task);
                 }
 
                 pTaskForm.Visible = false;
                 ViewState["EditIndex"] = null;
                 BindTasks();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Ошибка при сохранении задачи: {ex.Message}");
-                ShowErrorMessage("Ошибка при сохранении задачи");
-            }
         }
 
         // Скрыть форму редактирования без сохранения изменений
