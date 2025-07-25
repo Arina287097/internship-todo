@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1 {
+namespace Student.WebFormsTodo {
     
     
     public partial class ViewSwitcher {

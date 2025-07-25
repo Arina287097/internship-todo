@@ -1,19 +1,40 @@
-﻿using Student.Todo.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Student.Todo.Data;
+using Student.Todo.Models;
 using Student.Todo.Services;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 
 namespace Student.WebFormsTodo
 {
     public partial class _Default : Page
     {
+        private TaskManager _taskManager;
+        private TodoAccess _dataAccess;
+        private ITodoRepository _efRepository;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            taskManager = Session["TaskManager"] as TaskManager ?? new TaskManager();
-            Session["TaskManager"] = taskManager;
+            var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
+
+            _taskManager = Session["TaskManager"] as TaskManager;
+
+            if (_taskManager == null)
+            {
+                _taskManager = new TaskManager();
+                Session["TaskManager"] = _taskManager;
+
+                var tasks = _efRepository.GetAllTasks();
+                _taskManager.GetTasks().AddRange(tasks);
+
+                Debug.WriteLine("Создан новый TaskManager с задачами из БД");
+            }
 
             if (!IsPostBack)
             {
@@ -34,71 +55,123 @@ namespace Student.WebFormsTodo
             DescriptionError.Visible = false;
         }
 
-        // Изменит задачу 
+        // Изменить задачу
         protected void EditTask_Click(object sender, EventArgs e)
         {
-            int index = Convert.ToInt32(((Button)sender).CommandArgument);
-            var task = taskManager.GetTasks()[index];
+            try
+            {
+                int index = Convert.ToInt32(((Button)sender).CommandArgument);
+                if (index < 0 || index >= _taskManager.GetTasks().Count)
+                {
+                    throw new ArgumentOutOfRangeException("Неверный индекс задачи");
+                }
 
-            pTaskForm.Visible = true;
-            FormTitle.Text = "Изменить задачу";
-            tbTitle.Text = task.Title;
-            tbDescription.Text = task.Description;
-            ViewState["EditIndex"] = index;
+                var task = _taskManager.GetTasks()[index];
 
-            TitleError.Visible = false;
-            DescriptionError.Visible = false;
+                pTaskForm.Visible = true;
+                FormTitle.Text = "Изменить задачу";
+                tbTitle.Text = task.Title;
+                tbDescription.Text = task.Description;
+                ViewState["EditIndex"] = index;
+
+                TitleError.Visible = false;
+                DescriptionError.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка при редактировании задачи: {ex.Message}");
+                ShowErrorMessage("Ошибка при редактировании задачи");
+            }
         }
 
         // Переход на страницу для подтверждения удаления
         protected void DeleteTask_Click(object sender, EventArgs e)
         {
-            int index = Convert.ToInt32(((Button)sender).CommandArgument);
-            Session["DeleteIndex"] = index;
-            Response.Redirect("ConfirmDelete.aspx");
+            try
+            {
+                int index = Convert.ToInt32(((Button)sender).CommandArgument);
+                if (index < 0 || index >= _taskManager.GetTasks().Count)
+                {
+                    throw new ArgumentOutOfRangeException("Неверный индекс задачи");
+                }
+
+                var task = _taskManager.GetTasks()[index];
+
+                if (task.Id > 0)
+                {
+                    _efRepository.DeleteTask(task.Id);
+                }
+
+                Session["DeleteIndex"] = index;
+                Response.Redirect("ConfirmDelete.aspx");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка при удалении задачи: {ex.Message}");
+                ShowErrorMessage("Ошибка при удалении задачи");
+            }
+            Session["TaskManager"] = _taskManager;
         }
 
         // Сохранить новую задачу или сохранить изменения задачи
         protected void SaveTask_Click(object sender, EventArgs e)
         {
-            if (!ValidateTaskForm())
-            {
-                return;
-            }
+            if (!ValidateTaskForm()) return;
 
-            // Если валидация прошла успешно
             int? editIndex = ViewState["EditIndex"] as int?;
             var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
 
             if (editIndex.HasValue)
             {
-                taskManager.GetTasks()[editIndex.Value] = task;
+                // Проверка валидности индекса
+                if (editIndex.Value < 0 || editIndex.Value >= _taskManager.GetTasks().Count)
+                {
+                    throw new ArgumentOutOfRangeException("Неверный индекс редактируемой задачи");
+                }
+
+                task.Id = _taskManager.GetTasks()[editIndex.Value].Id;
+                _taskManager.GetTasks()[editIndex.Value] = task;
+                _efRepository.SaveTask(task);
             }
             else
             {
-                taskManager.AddTask(task);
+                _taskManager.AddTask(task);
+                _efRepository.SaveTask(task);
             }
 
             pTaskForm.Visible = false;
+            ViewState["EditIndex"] = null;
             BindTasks();
         }
-
 
         // Скрыть форму редактирования без сохранения изменений
         protected void CancelTask_Click(object sender, EventArgs e)
         {
             pTaskForm.Visible = false;
+            ViewState["EditIndex"] = null;
         }
-
-        private TaskManager taskManager;
 
         /// <summary>
         /// Привязать список задач из менеджера задач к GridView
         /// </summary>
         private void BindTasks()
         {
-            gvTask.DataSource = taskManager.GetTasks();
-            gvTask.DataBind();
+            try
+            {
+                if (gvTask == null)
+                {
+                    throw new InvalidOperationException("GridView 'gvTask' не найден на странице.");
+                }
+
+                var tasks = _taskManager?.GetTasks() ?? new List<TodoTask>();
+                gvTask.DataSource = tasks;
+                gvTask.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка при привязке задач: {ex.Message}");
+                ShowErrorMessage("Ошибка при загрузке списка задач");
+            }
         }
 
         /// <summary>
@@ -109,7 +182,6 @@ namespace Student.WebFormsTodo
         {
             bool isValid = true;
 
-            // Валидация названия
             if (string.IsNullOrWhiteSpace(tbTitle.Text))
             {
                 TitleError.Visible = true;
@@ -121,7 +193,6 @@ namespace Student.WebFormsTodo
                 TitleError.Visible = false;
             }
 
-            // Валидация описания
             if (string.IsNullOrWhiteSpace(tbDescription.Text))
             {
                 DescriptionError.Visible = true;
@@ -134,6 +205,19 @@ namespace Student.WebFormsTodo
             }
 
             return isValid;
+        }
+
+        /// <summary>
+        /// Отображает всплывающее сообщение об ошибке на клиентской стороне
+        /// </summary>
+        /// <param name="message">Текст ошибки</param>
+        private void ShowErrorMessage(string message)
+        {
+            ClientScript.RegisterStartupScript(
+                GetType(),
+                "alert",
+                $"alert('{message.Replace("'", "\\'")}');",
+                true);
         }
     }
 }
