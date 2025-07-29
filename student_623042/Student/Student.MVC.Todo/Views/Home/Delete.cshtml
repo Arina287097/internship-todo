@@ -1,0 +1,23 @@
+﻿@model Student.Todo.Models.TodoTask
+
+@{
+    ViewBag.Title = "Удаление задачи";
+}
+
+<h2>Удаление задачи</h2>
+
+<h3>Вы действительно хотите удалить эту задачу?</h3>
+<div>
+    <hr />
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-danger" />
+            @Html.ActionLink("Отмена", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

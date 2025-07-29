@@ -13,8 +13,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageReference Include="Unity.Abstractions" Version="5.11.1" />
+    <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="Unity.Abstractions" Version="5.11.7" />
+    <PackageReference Include="Unity.Container" Version="5.11.11" />
     <PackageReference Include="Unity.Mvc" Version="5.11.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Student.Todo\Student.Todo.csproj" />
   </ItemGroup>
 
 </Project>
