@@ -10,8 +10,14 @@ namespace Student.MvcTodo.App_Start
 {
     public static class UnityConfig
     {
+        /// <summary>
+        /// Статический контейнер для зависимостей
+        /// </summary>
         public static IUnityContainer Container { get; private set; }
 
+        /// <summary>
+        /// Регистрация компонентов в контейнере DI
+        /// </summary>
         public static void RegisterComponents()
         {
             Container = new UnityContainer();
@@ -27,10 +33,11 @@ namespace Student.MvcTodo.App_Start
             // Регистрирует репозиторий EF как реализацию ITodoRepository
             Container.RegisterType<ITodoRepository, EfTodoRepository>();
 
-            // Альтернативная регистрация для ADO.NET (раскомментировать для использования)
+            // Альтернативная регистрация для ADO.NET (раскомментировать для использования и закоментировать регистрацию EF)
             //Container.RegisterType<ITodoRepository, TodoAccess>(
-                 //new InjectionConstructor(ConfigurationManager.ConnectionStrings["TodoContext"].ConnectionString));
+            //new InjectionConstructor(ConfigurationManager.ConnectionStrings["TodoContext"].ConnectionString));
 
+            // Установка Unity в качестве резолвера зависимостей для MVC
             DependencyResolver.SetResolver(new UnityDependencyResolver(Container));
         }
     }

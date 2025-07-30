@@ -10,6 +10,9 @@ namespace Student.MvcTodo
 {
     public static class UnityMvcActivator
     {
+        /// <summary>
+        /// Инициализация Unity при старте приложения
+        /// </summary>
         public static void Start()
         {
             // Инициализация Unity
@@ -26,6 +29,9 @@ namespace Student.MvcTodo
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
         }
 
+        /// <summary>
+        /// Очистка ресурсов при остановке приложения
+        /// </summary>
         public static void Shutdown()
         {
             UnityConfig.Container?.Dispose();
