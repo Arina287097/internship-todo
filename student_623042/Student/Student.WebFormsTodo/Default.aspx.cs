@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
 namespace Student.WebFormsTodo
 {
     public partial class _Default : Page
@@ -20,10 +19,8 @@ namespace Student.WebFormsTodo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            taskManager = Session["TaskManager"] as TaskManager ?? new TaskManager();
-            Session["TaskManager"] = taskManager;
             var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDb"].ConnectionString);
             _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
 
             _taskManager = Session["TaskManager"] as TaskManager;
@@ -58,12 +55,9 @@ namespace Student.WebFormsTodo
             DescriptionError.Visible = false;
         }
 
-        // Изменит задачу 
         // Изменить задачу
         protected void EditTask_Click(object sender, EventArgs e)
         {
-            int index = Convert.ToInt32(((Button)sender).CommandArgument);
-            var task = taskManager.GetTasks()[index];
             try
             {
                 int index = Convert.ToInt32(((Button)sender).CommandArgument);
@@ -72,15 +66,8 @@ namespace Student.WebFormsTodo
                     throw new ArgumentOutOfRangeException("Неверный индекс задачи");
                 }
 
-            pTaskForm.Visible = true;
-            FormTitle.Text = "Изменить задачу";
-            tbTitle.Text = task.Title;
-            tbDescription.Text = task.Description;
-            ViewState["EditIndex"] = index;
                 var task = _taskManager.GetTasks()[index];
 
-            TitleError.Visible = false;
-            DescriptionError.Visible = false;
                 pTaskForm.Visible = true;
                 FormTitle.Text = "Изменить задачу";
                 tbTitle.Text = task.Title;
@@ -100,9 +87,6 @@ namespace Student.WebFormsTodo
         // Переход на страницу для подтверждения удаления
         protected void DeleteTask_Click(object sender, EventArgs e)
         {
-            int index = Convert.ToInt32(((Button)sender).CommandArgument);
-            Session["DeleteIndex"] = index;
-            Response.Redirect("ConfirmDelete.aspx");
             try
             {
                 int index = Convert.ToInt32(((Button)sender).CommandArgument);
@@ -132,26 +116,11 @@ namespace Student.WebFormsTodo
         // Сохранить новую задачу или сохранить изменения задачи
         protected void SaveTask_Click(object sender, EventArgs e)
         {
-            if (!ValidateTaskForm())
-            {
-                return;
-            }
             if (!ValidateTaskForm()) return;
 
-            // Если валидация прошла успешно
-            int? editIndex = ViewState["EditIndex"] as int?;
-            var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
             int? editIndex = ViewState["EditIndex"] as int?;
             var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
 
-            if (editIndex.HasValue)
-            {
-                taskManager.GetTasks()[editIndex.Value] = task;
-            }
-            else
-            {
-                taskManager.AddTask(task);
-            }
             if (editIndex.HasValue)
             {
                 // Проверка валидности индекса
@@ -171,23 +140,9 @@ namespace Student.WebFormsTodo
             }
 
             pTaskForm.Visible = false;
-            BindTasks();
-
-            pTaskForm.Visible = false;
             ViewState["EditIndex"] = null;
             BindTasks();
-
-
-
-
-
-
-
-
-
-
         }
-
 
         // Скрыть форму редактирования без сохранения изменений
         protected void CancelTask_Click(object sender, EventArgs e)
@@ -196,15 +151,11 @@ namespace Student.WebFormsTodo
             ViewState["EditIndex"] = null;
         }
 
-        private TaskManager taskManager;
-
         /// <summary>
         /// Привязать список задач из менеджера задач к GridView
         /// </summary>
         private void BindTasks()
         {
-            gvTask.DataSource = taskManager.GetTasks();
-            gvTask.DataBind();
             try
             {
                 if (gvTask == null)
@@ -231,7 +182,6 @@ namespace Student.WebFormsTodo
         {
             bool isValid = true;
 
-            // Валидация названия
             if (string.IsNullOrWhiteSpace(tbTitle.Text))
             {
                 TitleError.Visible = true;
@@ -243,7 +193,6 @@ namespace Student.WebFormsTodo
                 TitleError.Visible = false;
             }
 
-            // Валидация описания
             if (string.IsNullOrWhiteSpace(tbDescription.Text))
             {
                 DescriptionError.Visible = true;

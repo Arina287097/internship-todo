@@ -20,7 +20,7 @@ namespace Student.WebFormsTodo
         protected void Page_Load(object sender, EventArgs e)
         {
             var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDb"].ConnectionString);
             _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
 
             if (Session == null)

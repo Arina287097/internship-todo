@@ -5,6 +5,5 @@
         <p>Вы действительно хотите удалить задачу?</p>
         <p>Если да, то нажмите кнопку "Удалить", иначе нажмите "Отмена".</p>
         <asp:Button ID="ConfirmDeleteButton" runat="server" Text="Удалить" OnClick="ConfirmDeleteButton_Click" CssClass="btn btn-danger" />
-        <asp:Button ID="Button1" runat="server" Text="Отмена" OnClick="CancelButton_Click" CssClass="btn btn-secondary"/>
         <asp:Button ID="CancelButton" runat="server" Text="Отмена" OnClick="CancelButton_Click" CssClass="btn btn-secondary"/>
 </asp:Content>
