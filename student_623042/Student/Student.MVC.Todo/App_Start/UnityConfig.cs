@@ -11,18 +11,18 @@ namespace Student.MvcTodo.App_Start
     public static class UnityConfig
     {
         /// <summary>
-        /// Статический контейнер для зависимостей
+        /// РЎС‚Р°С‚РёС‡РµСЃРєРёР№ РєРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№
         /// </summary>
         public static IUnityContainer Container { get; private set; }
 
         /// <summary>
-        /// Регистрация компонентов в контейнере DI
+        /// Р РµРіРёСЃС‚СЂР°С†РёСЏ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ РІ РєРѕРЅС‚РµР№РЅРµСЂРµ DI
         /// </summary>
         public static void RegisterComponents()
         {
             Container = new UnityContainer();
 
-            // Регистрирует контекст EF
+            // Р РµРіРёСЃС‚СЂРёСЂСѓРµС‚ РєРѕРЅС‚РµРєСЃС‚ EF
             Container.RegisterType<TodoContext>(new InjectionFactory(c =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
@@ -30,14 +30,14 @@ namespace Student.MvcTodo.App_Start
                 return new TodoContext(optionsBuilder.Options);
             }));
 
-            // Регистрирует репозиторий EF как реализацию ITodoRepository
+            // Р РµРіРёСЃС‚СЂРёСЂСѓРµС‚ СЂРµРїРѕР·РёС‚РѕСЂРёР№ EF РєР°Рє СЂРµР°Р»РёР·Р°С†РёСЋ ITodoRepository
             Container.RegisterType<ITodoRepository, EfTodoRepository>();
 
-            // Альтернативная регистрация для ADO.NET (раскомментировать для использования и закоментировать регистрацию EF)
+            // РђР»СЊС‚РµСЂРЅР°С‚РёРІРЅР°СЏ СЂРµРіРёСЃС‚СЂР°С†РёСЏ РґР»СЏ ADO.NET (СЂР°СЃРєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Рё Р·Р°РєРѕРјРµРЅС‚РёСЂРѕРІР°С‚СЊ СЂРµРіРёСЃС‚СЂР°С†РёСЋ EF)
             //Container.RegisterType<ITodoRepository, TodoAccess>(
             //new InjectionConstructor(ConfigurationManager.ConnectionStrings["TodoContext"].ConnectionString));
 
-            // Установка Unity в качестве резолвера зависимостей для MVC
+            // РЈСЃС‚Р°РЅРѕРІРєР° Unity РІ РєР°С‡РµСЃС‚РІРµ СЂРµР·РѕР»РІРµСЂР° Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№ РґР»СЏ MVC
             DependencyResolver.SetResolver(new UnityDependencyResolver(Container));
         }
     }

@@ -3,14 +3,9 @@
 @{
     ViewBag.Title = "Удаление задачи";
 }
-
 <h2>Удаление задачи</h2>
-
 <h3>Вы действительно хотите удалить эту задачу?</h3>
 <div>
-    <hr />
-
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

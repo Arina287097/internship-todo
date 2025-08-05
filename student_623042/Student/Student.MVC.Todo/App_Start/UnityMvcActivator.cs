@@ -11,26 +11,26 @@ namespace Student.MvcTodo
     public static class UnityMvcActivator
     {
         /// <summary>
-        /// Инициализация Unity при старте приложения
+        /// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Unity РїСЂРё СЃС‚Р°СЂС‚Рµ РїСЂРёР»РѕР¶РµРЅРёСЏ
         /// </summary>
         public static void Start()
         {
-            // Инициализация Unity
+            // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Unity
             UnityConfig.RegisterComponents();
 
-            // Настройка фильтров
+            // РќР°СЃС‚СЂРѕР№РєР° С„РёР»СЊС‚СЂРѕРІ
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
 
-            // Установка DependencyResolver
+            // РЈСЃС‚Р°РЅРѕРІРєР° DependencyResolver
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
 
-            // Раскомментировать если нужно использовать PerRequestLifetimeManager
+            // Р Р°СЃРєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ РµСЃР»Рё РЅСѓР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ PerRequestLifetimeManager
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
         }
 
         /// <summary>
-        /// Очистка ресурсов при остановке приложения
+        /// РћС‡РёСЃС‚РєР° СЂРµСЃСѓСЂСЃРѕРІ РїСЂРё РѕСЃС‚Р°РЅРѕРІРєРµ РїСЂРёР»РѕР¶РµРЅРёСЏ
         /// </summary>
         public static void Shutdown()
         {
