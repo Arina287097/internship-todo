@@ -20,7 +20,7 @@ namespace Student.WebFormsTodo
         protected void Page_Load(object sender, EventArgs e)
         {
             var optionsBuilder = new DbContextOptionsBuilder<TodoContext>();
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDbContext"].ConnectionString);
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["TodoDb"].ConnectionString);
             _efRepository = new EfTodoRepository(new TodoContext(optionsBuilder.Options));
 
             _taskManager = Session["TaskManager"] as TaskManager;
@@ -116,32 +116,32 @@ namespace Student.WebFormsTodo
         // Сохранить новую задачу или сохранить изменения задачи
         protected void SaveTask_Click(object sender, EventArgs e)
         {
-                if (!ValidateTaskForm()) return;
+            if (!ValidateTaskForm()) return;
 
-                int? editIndex = ViewState["EditIndex"] as int?;
-                var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
+            int? editIndex = ViewState["EditIndex"] as int?;
+            var task = new TodoTask(tbTitle.Text.Trim(), tbDescription.Text.Trim());
 
-                if (editIndex.HasValue)
+            if (editIndex.HasValue)
+            {
+                // Проверка валидности индекса
+                if (editIndex.Value < 0 || editIndex.Value >= _taskManager.GetTasks().Count)
                 {
-                    // Проверка валидности индекса
-                    if (editIndex.Value < 0 || editIndex.Value >= _taskManager.GetTasks().Count)
-                    {
-                        throw new ArgumentOutOfRangeException("Неверный индекс редактируемой задачи");
-                    }
-
-                    task.Id = _taskManager.GetTasks()[editIndex.Value].Id;
-                    _taskManager.GetTasks()[editIndex.Value] = task;
-                    _efRepository.SaveTask(task);
-                }
-                else
-                {
-                    _taskManager.AddTask(task);
-                    _efRepository.SaveTask(task);
+                    throw new ArgumentOutOfRangeException("Неверный индекс редактируемой задачи");
                 }
 
-                pTaskForm.Visible = false;
-                ViewState["EditIndex"] = null;
-                BindTasks();
+                task.Id = _taskManager.GetTasks()[editIndex.Value].Id;
+                _taskManager.GetTasks()[editIndex.Value] = task;
+                _efRepository.SaveTask(task);
+            }
+            else
+            {
+                _taskManager.AddTask(task);
+                _efRepository.SaveTask(task);
+            }
+
+            pTaskForm.Visible = false;
+            ViewState["EditIndex"] = null;
+            BindTasks();
         }
 
         // Скрыть форму редактирования без сохранения изменений

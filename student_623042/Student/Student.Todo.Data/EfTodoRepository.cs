@@ -18,7 +18,7 @@ namespace Student.Todo.Data
         /// <inheritdoc />
         public List<TodoTask> GetAllTasks()
         {
-            return _context.Tasks.ToList();
+            return _context.Tasks.AsNoTracking().ToList();
         }
 
         /// <inheritdoc />

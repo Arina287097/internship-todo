@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Student.Todo.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace Student.Todo.Data
 {
